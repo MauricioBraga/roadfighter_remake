@@ -1,0 +1,20 @@
+Dependencies (SDL3 versions):
+ SDL3
+ SDL3_image
+ SDL3_ttf
+ SDL3_mixer
+ CMake >= 3.16
+
+On Ubuntu/Debian (once SDL3 packages are available in your distro, or built
+from source):
+ sudo apt-get install g++ cmake ninja-build
+
+From the top directory (the one with CMakeLists.txt and the src/, graphics/,
+fonts/, maps/, sound/ subdirs):
+
+  cmake -B build -G Ninja
+  cmake --build build
+  ./build/roadfighter
+
+See the "setting up a Windows + VS Code development environment" instructions
+provided alongside this port for the Windows/vcpkg workflow.

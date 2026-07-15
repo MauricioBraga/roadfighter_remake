@@ -1,0 +1,53 @@
+cmake_minimum_required(VERSION 3.16)
+project(roadfighter CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# All these are provided by vcpkg (Windows/VS Code) or by your system's
+# SDL3 packages (Linux/macOS). See the README section on setting up the
+# development environment for how to install them.
+find_package(SDL3 CONFIG REQUIRED)
+find_package(SDL3_image CONFIG REQUIRED)
+find_package(SDL3_ttf CONFIG REQUIRED)
+find_package(SDL3_mixer CONFIG REQUIRED)
+
+file(GLOB ROADFIGHTER_SOURCES CONFIGURE_DEPENDS src/*.cpp)
+
+add_executable(roadfighter ${ROADFIGHTER_SOURCES})
+target_include_directories(roadfighter PRIVATE src)
+
+target_link_libraries(roadfighter PRIVATE
+	SDL3::SDL3
+	SDL3_image::SDL3_image
+	SDL3_ttf::SDL3_ttf
+	SDL3_mixer::SDL3_mixer
+)
+
+if (WIN32)
+	target_link_libraries(roadfighter PRIVATE winmm)
+endif()
+
+# RoadFighter loads its assets (fonts/graphics/maps/sound) using paths that
+# are relative to the current working directory at run time (e.g.
+# "graphics/disclaimer.jpg"), so the asset folders need to sit next to the
+# executable. This copies them into the build output directory after every
+# build.
+foreach(asset_dir fonts graphics maps sound)
+	add_custom_command(TARGET roadfighter POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+			${CMAKE_SOURCE_DIR}/${asset_dir}
+			$<TARGET_FILE_DIR:roadfighter>/${asset_dir}
+	)
+endforeach()
+
+# On Windows, vcpkg builds shared (DLL) SDL3 libraries by default; copy them
+# next to the .exe so it can actually run without installing them system-wide.
+if (WIN32)
+	add_custom_command(TARGET roadfighter POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			$<TARGET_RUNTIME_DLLS:roadfighter>
+			$<TARGET_FILE_DIR:roadfighter>
+		COMMAND_EXPAND_LISTS
+	)
+endif()
