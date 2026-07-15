@@ -1,0 +1,54 @@
+# Build directories
+/build/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+compile_commands.json
+CMakeUserPresets.json
+CMakeLists.txt.user
+
+# Ninja
+build.ninja
+rules.ninja
+
+# Generated executables and libraries
+*.exe
+*.dll
+*.lib
+*.a
+*.so
+*.dylib
+*.pdb
+*.obj
+*.o
+*.lo
+*.la
+*.lai
+*.out
+*.app
+
+# SDL/MingW/MSYS logs
+*.log
+
+# Editor and OS files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code settings
+.vscode/
+
+# Generated project files
+install_manifest.txt
+Testing/
+
+# Other generated files
+*.pyc
+*.pyo
+__pycache__/
