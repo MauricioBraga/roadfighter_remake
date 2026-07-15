@@ -258,11 +258,12 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 			if (!game->cycle()) quit=true;
 			SDL_SetSurfaceClipRect(screen_sfc, 0);
 			game->draw(screen_sfc);
-			/* Blit the 32bpp backbuffer to the window surface so the window
-			   actually receives a 32-bit image regardless of the native
-			   window surface format. */
+			/* Scale the 512x384 backbuffer to the window surface size.
+			   This ensures fullscreen mode renders scaled graphics instead of
+			   drawing the game at native resolution only. */
 			if (window_sfc!=NULL && screen_sfc!=NULL) {
-				SDL_BlitSurface(screen_sfc, NULL, window_sfc, NULL);
+				SDL_Rect dstrect = {0, 0, window_sfc->w, window_sfc->h};
+				SDL_BlitSurfaceScaled(screen_sfc, NULL, window_sfc, &dstrect, SDL_SCALEMODE_PIXELART);
 			}
 			SDL_UpdateWindowSurface(window_wnd);
 		} /* if */
