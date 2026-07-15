@@ -22,7 +22,11 @@ extern int SCREEN_Y;
 extern int start_level;
 
 const char *maps[6] = {"maps/level1.mg2",
-			   "maps/level6.mg2"};
+		       "maps/level2.mg2",
+		       "maps/level3.mg2",
+		       "maps/level4.mg2",
+		       "maps/level5.mg2",
+		       "maps/level6.mg2"};
 
 
 int CRoadFighter::interlevel_cycle(void)
@@ -74,11 +78,16 @@ int CRoadFighter::interlevel_cycle(void)
 		/* Create the game: */ 
 		delete game;
 		game=0;
+		output_debug_message("About to create CGame with maps[%d] = %s\n", current_level-1, maps[current_level-1]);
 		if (n_players==1) {
+			output_debug_message("Creating single player game...\n");
 			game=new CGame(maps[current_level-1],game_mode,left_key,right_key,fire_key,score1,current_level,game_remake_extras);
+			output_debug_message("Single player game created successfully\n");
 		} else {
+			output_debug_message("Creating two player game...\n");
 			game=new CGame(maps[current_level-1],game_mode,left_key,right_key,fire_key,
 														   left2_key,right2_key,fire2_key,score1,score2,current_level,game_remake_extras);
+			output_debug_message("Two player game created successfully\n");
 		} /* if */ 
 		interlevel_state=0;
 		interlevel_timmer=0;
@@ -87,9 +96,11 @@ int CRoadFighter::interlevel_cycle(void)
 		output_debug_message("CRoadFighter::interlevel_cycle: game created.\n");
 
 	} /* if */ 
-
+	output_debug_message("variável interlevel_state=%d\n",interlevel_state);
+	output_debug_message("About to enter switch statement\n");
 	switch(interlevel_state) {
 	case 0:/* Appearing map */ 
+		output_debug_message("Case 0: state_timmer=%d, interlevel_time=%d\n", state_timmer, interlevel_time);
 		if (state_timmer>=interlevel_time) {
 			output_debug_message("CRoadFighter::interlevel_cycle: going to state 1.\n");
 			interlevel_state=1;
@@ -99,6 +110,7 @@ int CRoadFighter::interlevel_cycle(void)
 		} /* if */ 
 		break;
 	case 1:/* Advancing car */ 
+		output_debug_message("Case 1\n");
 		if (state_timmer>=interlevel_time*4 ||
 			(interlevel_timmer>=(interlevel_time*2) &&
 			 ((keyboard[fire_key] && !old_keyboard[fire_key]) ||
@@ -111,6 +123,7 @@ int CRoadFighter::interlevel_cycle(void)
 		} /* if */ 
 		break;
 	case 2:/* Disappearing map */ 
+		output_debug_message("Case 2\n");
 		if (interlevel_timmer<=0) {
 			output_debug_message("CRoadFighter::interlevel_cycle: going to state 3.\n");
 			interlevel_state=3;
@@ -120,6 +133,15 @@ int CRoadFighter::interlevel_cycle(void)
 		} /* if */ 
 		break;
 	case 3:/* Appearing text */ 
+		output_debug_message("Case 3: Appearing text\n");
+		output_debug_message("estamos no estado 3, interlevel_timmer=%d\n",interlevel_timmer);
+	    // output_debug_message("interlevel_time=%d\n",interlevel_time);
+	    // output_debug_message("firekey=%d\n",fire_key);
+	    // output_debug_message("keyboard[fire_key]=%d\n",keyboard[fire_key]);
+	    // output_debug_message("old_keyboard[fire_key]=%d\n",old_keyboard[fire_key]);
+		// output_debug_message("keyboard[SDL_SCANCODE_ESCAPE]=%d\n",keyboard[SDL_SCANCODE_ESCAPE]);
+		//output_debug_message("old_keyboard[SDL_SCANCODE_ESCAPE]=%d\n",old_keyboard[SDL_SCANCODE_ESCAPE]);	
+	    
 		if (interlevel_timmer>=interlevel_time*5 ||
 			(interlevel_timmer>=interlevel_time &&
 			 ((keyboard[fire_key] && !old_keyboard[fire_key]) ||
@@ -129,9 +151,11 @@ int CRoadFighter::interlevel_cycle(void)
 			if (interlevel_timmer>=interlevel_time) interlevel_timmer=interlevel_time;
 		} else {
 			interlevel_timmer++;
+			output_debug_message("interlevel_timmer aumentou=%d\n",interlevel_timmer);
 		} /* if */ 
 		break;
 	case 4:/* Disappearing text */ 
+		output_debug_message("Case 4: Disappearing text, interlevel_timmer=%d\n", interlevel_timmer);
 		Sound_music_volume((interlevel_timmer*MIX_MAX_VOLUME)/interlevel_time);
 		if (interlevel_timmer<=0) {
 			output_debug_message("CRoadFighter::interlevel_cycle: going to playing state.\n");
@@ -142,7 +166,8 @@ int CRoadFighter::interlevel_cycle(void)
 		} else interlevel_timmer--;
 		break;
 	} /* switch */ 
-
+	// output_debug_message("CRoadFighter::interlevel_cycle: finished cycling.\n");
+	// output_debug_message("retornando variável interlevel_state=%d\n",interlevel_state);
 	return INTERLEVEL_STATE;
 } /* CRoadFighter::interlevel_cycle */ 
 

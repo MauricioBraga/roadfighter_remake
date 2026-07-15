@@ -184,7 +184,7 @@ bool CRoadFighter::cycle(void)
 		for(i=0;i<nk;i++) keyboard[i]=sdl_keys[i] ? 1 : 0;
 		for(;i<SDL_SCANCODE_COUNT;i++) keyboard[i]=0;
 	}
-
+	// output_debug_message("CRoadFighter::cycle: estado=%d, state_timmer=%d\n",state,state_timmer);
 	switch(state) {
 	case PRESENTATION_STATE:state=presentation_cycle();
 					break;
@@ -203,12 +203,13 @@ bool CRoadFighter::cycle(void)
 	case QUIT_STATE:retval=false;
 					break;
 	} /* switch */ 
-
+	// output_debug_message("CRoadFighter::cycle: terminado cycling, state=%d, state_timmer=%d\n",state,state_timmer);
 	if (state!=old_state) state_timmer=0;
 				 	 else state_timmer++;
 
 	for(i=0;i<SDL_SCANCODE_COUNT;i++) old_keyboard[i]=keyboard[i];
 	
+	// output_debug_message("Retornando retval = %d\n",retval);
 	return retval;
 } /* CRoadFighter::cycle */ 
 

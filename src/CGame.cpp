@@ -14,6 +14,7 @@
 #include "CGame.h"
 
 #include "auxiliar.h"
+#include "debug.h"
 
 extern int MAX_SPEED;
 int PLAYING_WINDOW=384+64;
@@ -71,13 +72,17 @@ void CGame::init_game(const char *mapname)
 {
 	CObject *o;
 
+	output_debug_message("init_game: starting, mapname=%s\n", mapname);
 	game_timmer=0;
 	game_state=0;
 	start_delay=default_start_delay;
 
+	output_debug_message("init_game: about to call load_map\n");
 	if (!load_map(mapname)) throw;
+	output_debug_message("init_game: load_map completed\n");
 
 	init_quick_tables();
+	output_debug_message("init_game: quick_tables initialized\n");
 
 	font=TTF_OpenFont("fonts/tanglewo.ttf",16);
 
@@ -225,9 +230,12 @@ CGame::CGame(const char *mapname,int mode,int left_key,int right_key,int fire_ke
 {
 	CObject *o;
 
+	output_debug_message("CGame constructor (single player): entered\n");
 	game_mode=mode;
 
+	output_debug_message("CGame constructor: about to call init_game\n");
 	init_game(mapname);
+	output_debug_message("CGame constructor: init_game completed\n");
 	current_level=cl;
 
 	game_remake_extras=extras;
@@ -245,6 +253,7 @@ CGame::CGame(const char *mapname,int mode,int left_key,int right_key,int fire_ke
 	focusing_fy.Add(new float(0.66F));
 	focusing_next_car.Add(new int(CAR_INTERVAL));
 	focusing_next_car_index.Add(new int(0));
+	output_debug_message("CGame constructor (single player): completed\n");
 } /* CGame::CGame */ 
 
 
