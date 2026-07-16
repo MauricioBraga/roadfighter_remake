@@ -262,8 +262,27 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 			   This ensures fullscreen mode renders scaled graphics instead of
 			   drawing the game at native resolution only. */
 			if (window_sfc!=NULL && screen_sfc!=NULL) {
-				SDL_Rect dstrect = {0, 0, window_sfc->w, window_sfc->h};
-				SDL_BlitSurfaceScaled(screen_sfc, NULL, window_sfc, &dstrect, SDL_SCALEMODE_PIXELART);
+				
+				// the following code calculates the scaling factor to maintain the 
+				// aspect ratio of the game screen
+				// and centers the scaled image in the window.
+				float scale_x = (float)window_sfc->w / (float)screen_sfc->w;
+    			float scale_y = (float)window_sfc->h / (float)screen_sfc->h;
+    			float scale = (scale_x<scale_y) ? scale_x : scale_y;
+
+    			int dst_w = (int)(screen_sfc->w*scale);
+    			int dst_h = (int)(screen_sfc->h*scale);
+
+    			SDL_Rect dstrect;
+    			dstrect.w = dst_w;
+    			dstrect.h = dst_h;
+    			dstrect.x = (window_sfc->w-dst_w)/2;
+    			dstrect.y = (window_sfc->h-dst_h)/2;
+
+    			SDL_FillSurfaceRect(window_sfc, NULL, SDL_MapRGB(window_sfc->format,0,0,0));
+    			SDL_BlitSurfaceScaled(screen_sfc, NULL, window_sfc, &dstrect, SDL_SCALEMODE_PIXELART);
+
+
 			}
 			SDL_UpdateWindowSurface(window_wnd);
 		} /* if */
