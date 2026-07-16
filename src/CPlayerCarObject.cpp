@@ -22,6 +22,10 @@ extern int MAX_FUEL;
 extern int FUEL_RECHARGE;
 extern int FUEL_LOSS;
 
+// extern allows to access these variables 
+// from other files, like CGame.cpp, where they are defined.
+extern int CHEAT;
+
 extern int ENEMY_SPEED;
 
 const int explosion_tiles=1;
@@ -372,7 +376,7 @@ bool CPlayerCarObject::cycle(unsigned char *keyboard,unsigned char *old_keyboard
 		if (goal_reached && fuel<=0) fuel=1;
 
 		/* Lose fuel: */ 
-		if (fuel>0 && !goal_reached) {
+		if (fuel>0 && !goal_reached && CHEAT!=1) {
 			fuel--;
 			if (fuel>=MAX_FUEL) fuel=MAX_FUEL;
 			if (fuel<0) fuel=0;
@@ -399,7 +403,7 @@ bool CPlayerCarObject::cycle(unsigned char *keyboard,unsigned char *old_keyboard
 			/* CRASH AGAINST A ROAD WALL: */ 
 			if ((-y_speed)>0.75F*MAX_SPEED ||
 				o->constitution_test(CONSTITUTION_CAR)) {
-				if (fuel>FUEL_LOSS*2) fuel-=FUEL_LOSS;
+				if (fuel>FUEL_LOSS*2 && CHEAT!=1) fuel-=FUEL_LOSS;
 				state=4;
 				state_timmer=0;
 				y_speed=0;

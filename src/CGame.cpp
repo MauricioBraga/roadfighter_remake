@@ -32,6 +32,9 @@ int MAX_FUEL=2048;
 int FUEL_RECHARGE=384;
 int FUEL_LOSS=256;
 
+// Cheats:
+int CHEAT=0;	/* CHEAT==1 disables fuel consumption */
+
 // Enemy: 
 int ENEMY_SPEED=(13<<8);
 int ENEMY_HSPEED=416;
@@ -424,6 +427,11 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 	if (keyboard[SDL_SCANCODE_F1] && !old_keyboard[SDL_SCANCODE_F1]) {
 		if (paused) paused=false;
 			   else paused=true;
+	} /* if */ 
+
+	// Activates / deactivates cheat mode, turning on / off fuel consumption:
+	if (keyboard[SDL_SCANCODE_T] && !old_keyboard[SDL_SCANCODE_T]) {
+    	CHEAT = (CHEAT==1) ? 0 : 1;
 	} /* if */ 
 
 	if (paused) return true;
