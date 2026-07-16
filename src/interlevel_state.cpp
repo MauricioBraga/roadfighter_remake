@@ -96,8 +96,8 @@ int CRoadFighter::interlevel_cycle(void)
 		output_debug_message("CRoadFighter::interlevel_cycle: game created.\n");
 
 	} /* if */ 
-	output_debug_message("variável interlevel_state=%d\n",interlevel_state);
-	output_debug_message("About to enter switch statement\n");
+	// output_debug_message("variável interlevel_state=%d\n",interlevel_state);
+	// output_debug_message("About to enter switch statement\n");
 	switch(interlevel_state) {
 	case 0:/* Appearing map */ 
 		output_debug_message("Case 0: state_timmer=%d, interlevel_time=%d\n", state_timmer, interlevel_time);
@@ -133,8 +133,8 @@ int CRoadFighter::interlevel_cycle(void)
 		} /* if */ 
 		break;
 	case 3:/* Appearing text */ 
-		output_debug_message("Case 3: Appearing text\n");
-		output_debug_message("estamos no estado 3, interlevel_timmer=%d\n",interlevel_timmer);
+		// output_debug_message("Case 3: Appearing text\n");
+		// output_debug_message("estamos no estado 3, interlevel_timmer=%d\n",interlevel_timmer);
 	    // output_debug_message("interlevel_time=%d\n",interlevel_time);
 	    // output_debug_message("firekey=%d\n",fire_key);
 	    // output_debug_message("keyboard[fire_key]=%d\n",keyboard[fire_key]);
@@ -151,11 +151,11 @@ int CRoadFighter::interlevel_cycle(void)
 			if (interlevel_timmer>=interlevel_time) interlevel_timmer=interlevel_time;
 		} else {
 			interlevel_timmer++;
-			output_debug_message("interlevel_timmer aumentou=%d\n",interlevel_timmer);
+			// output_debug_message("interlevel_timmer aumentou=%d\n",interlevel_timmer);
 		} /* if */ 
 		break;
 	case 4:/* Disappearing text */ 
-		output_debug_message("Case 4: Disappearing text, interlevel_timmer=%d\n", interlevel_timmer);
+		// output_debug_message("Case 4: Disappearing text, interlevel_timmer=%d\n", interlevel_timmer);
 		Sound_music_volume((interlevel_timmer*MIX_MAX_VOLUME)/interlevel_time);
 		if (interlevel_timmer<=0) {
 			output_debug_message("CRoadFighter::interlevel_cycle: going to playing state.\n");

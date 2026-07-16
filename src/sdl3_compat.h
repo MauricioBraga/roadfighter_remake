@@ -95,7 +95,14 @@ static inline int SDL_SetAlpha(SDL_Surface *surface, Uint32 flag, Uint8 alpha)
 static inline SDL_Surface *SDL_DisplayFormat(SDL_Surface *surface)
 {
 	SDL_Surface *res = SDL_ConvertSurface(surface, SDL_PIXELFORMAT_XRGB8888);
-	SDL_FreeSurface(surface);
+	// esta linha foi removida porque a função
+	// SDL_DisplayFormat da SDL 1.2 ( que essa função
+	// busca espelhar) não liberava
+	// a superfície originalmente. o SDL3 não 
+	// precisa mais liberar a superfície original, 
+	// e o RoadFighter não faz isso em nenhum outro
+	// lugar. A linha original era:
+	// SDL_FreeSurface(surface);
 	return res;
 } /* SDL_DisplayFormat */
 
