@@ -24,6 +24,10 @@ int CRoadFighter::konami_cycle(void)
 	if (konami_state==0) konami_timmer++;
 	if (konami_state==1) konami_timmer--;
 
+	if (konami_state==0 && state_timmer == 160) {
+		Sound_play(Sound_create_sound("sound/braingames"));
+	}
+
 	if (konami_state==0 && 
 		(state_timmer>=350 ||
 		 (keyboard[fire_key] && !old_keyboard[fire_key]) ||
