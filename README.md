@@ -6,6 +6,8 @@
   <img src="RoadFighter.png" alt="Road Fighter Remake" width="500" />
 </div>
 
+<p>
+
 This repository aims to do some modifications / enhancements to the original Road Fighter remake, developed by Braingames and sent to the RETROREMAKES REMAKE COMPETITION in the year of 2003. 
 
 You can find the original RoadFighter remake in the official website: 
@@ -16,9 +18,9 @@ http://roadfighter.jorito.net
 
 I didn't participate in this remake by the time it was done (I only joined Braingames team by the time of the Goonies project), but I was always a fan of this game, so I would like to bring some things to this game:
 
-- SDL3 support 
-- New music
-- Minor enhancements (cheat mode, new level music and some SFX, maybe new graphic and animations)
+- SDL3 support, replacing the old deprecated SDL 1.2 lib used in the original game.
+- New music to each level (allowing for different sound sets).
+- Minor enhancements (cheat mode, new SFX, maybe new graphic and animations)
 
 
 ## Original RoadFighter remake credits:
