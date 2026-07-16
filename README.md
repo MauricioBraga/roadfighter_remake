@@ -1,6 +1,10 @@
-# Road Fighter Remake
+<H1 align = "center">Road Fighter Remake </H1>
 
-[![Watch the game here](RoadFighter.png)](https://youtu.be/mMIhwvqO9CA)
+
+
+<div align="center">
+  <img src="RoadFighter.png" alt="Road Fighter Remake" width="500" />
+</div>
 
 This repository aims to do some modifications / enhancements to the original Road Fighter remake, developed by Braingames and sent to the RETROREMAKES REMAKE COMPETITION in the year of 2003. 
 
