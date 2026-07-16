@@ -20,6 +20,10 @@ extern int MAX_FUEL;
 extern int SCREEN_X;
 extern int SCREEN_Y;
 
+// necessary to access CHEAT variable
+// in order to draw a cheat indicator on screen.
+extern int CHEAT;
+
 CRoadFighter::CRoadFighter(void)
 {
 	int i;
@@ -311,8 +315,9 @@ void CRoadFighter::scoreboard_draw(int x,int y,SDL_Surface *screen)
 			} /* for */ 
 			j--;
 		} /* while */ 
-	} /* if */ 
-
+	} /* if */
+	
+	
 	/* Draw the mini-map: */ 
 	{
 		SDL_Rect r;
@@ -409,5 +414,24 @@ void CRoadFighter::scoreboard_draw(int x,int y,SDL_Surface *screen)
 
 		SDL_BlitSurface(scoreboardleft_sfc,0,screen,&r);
 	} /* if */ 
+
+
+/* Draw the "CHEAT ON" indicator: */ 
+if (CHEAT==1) {
+    SDL_Color c;
+    SDL_Surface *sfc;
+
+    c.r=255;
+    c.g=0;
+    c.b=0;
+    sfc=TTF_RenderText_Blended(font1,"CHEAT ON",c);
+    r.x=x+(scoreboard_sfc->w-sfc->w)/2;
+    r.y=150;
+    r.w=sfc->w;
+    r.h=sfc->h;
+    SDL_BlitSurface(sfc,0,screen,&r);
+    SDL_FreeSurface(sfc);
+} /* if */
+
 
 } /* CRoadFighter::scoreboard_draw */ 
