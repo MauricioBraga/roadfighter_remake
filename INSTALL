@@ -16,5 +16,4 @@ fonts/, maps/, sound/ subdirs):
   cmake --build build
   ./build/roadfighter
 
-See the "setting up a Windows + VS Code development environment" instructions
-provided alongside this port for the Windows/vcpkg workflow.
+
