@@ -1,5 +1,7 @@
 # Road Fighter Remake
 
+[![Watch the game here](RoadFighter.png)](https://youtu.be/mMIhwvqO9CA)
+
 This repository aims to do some modifications / enhancements to the original Road Fighter remake, developed by Braingames and sent to the RETROREMAKES REMAKE COMPETITION in the year of 2003. 
 
 You can find the original RoadFighter remake in the official website: 
@@ -12,7 +14,7 @@ I didn't participate in this remake by the time it was done (I only joined Brain
 
 - SDL3 support 
 - New music
-- Minor enhancements (cheat mode, maybe new SFX, animations)
+- Minor enhancements (cheat mode, new level music and some SFX, maybe new graphic and animations)
 
 
 ## Original RoadFighter remake credits:
