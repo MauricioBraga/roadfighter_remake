@@ -109,7 +109,7 @@ static inline SDL_Surface *SDL_DisplayFormat(SDL_Surface *surface)
 static inline SDL_Surface *SDL_DisplayFormatAlpha(SDL_Surface *surface)
 {
 	SDL_Surface *res = SDL_ConvertSurface(surface, SDL_PIXELFORMAT_ARGB8888);
-	SDL_FreeSurface(surface);
+	// SDL_FreeSurface(surface);
 	return res;
 } /* SDL_DisplayFormatAlpha */
 
