@@ -25,7 +25,7 @@ extern int SCREEN_Y;
 extern int CHEAT;
 
 extern int MUSIC_SET;
-
+extern int N_MUSIC_SETS;
 
 CRoadFighter::CRoadFighter(void)
 {
@@ -192,11 +192,12 @@ bool CRoadFighter::cycle(void)
 		for(;i<SDL_SCANCODE_COUNT;i++) keyboard[i]=0;
 	}
 
-	// chaveia entre os dois sets de música (Jorito original e Wolf):
+	// chaveia entre os sets de música ao pressionar F9:
 	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
-		MUSIC_SET = (MUSIC_SET==1) ? 2 : 1;
-		
+    	MUSIC_SET++;
+    	if (MUSIC_SET>N_MUSIC_SETS) MUSIC_SET=1;
 	} /* if */
+	
 
 	// output_debug_message("CRoadFighter::cycle: estado=%d, state_timmer=%d\n",state,state_timmer);
 	switch(state) {

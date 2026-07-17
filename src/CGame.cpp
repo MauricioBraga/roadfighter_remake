@@ -37,7 +37,11 @@ int FUEL_LOSS=256;
 int CHEAT=0;	/* CHEAT==1 disables fuel consumption */
 
 // Music sets:
-int MUSIC_SET=1;	/* 1 = sound/set1 (Jorito original), 2 = sound/set2 (Wolf) (toggled with F9) */
+int N_MUSIC_SETS=3;	/* number of soundsets folders available */
+int MUSIC_SET=1;	/* 1..N_MUSIC_SETS, cycled with F9 
+					* 1 = sound/set1 (Jorito original), 
+					* 2 = sound/set2 (Jorito Extended (F1 Spirit) ) 
+					* 3 = sound/set3 (Wolf alternative sound set) */
 
 // Enemy: 
 int ENEMY_SPEED=(13<<8);
@@ -78,18 +82,23 @@ static void play_level_music(int level)
 {
 	char path[64];
 	int idx;
- 
-	if ((level%6)==1) idx=1;
-	else if ((level%6)==2) idx=2;
-	else if ((level%6)==3) idx=3;
-	else if ((level%6)==4) idx=4;
-	else if ((level%6)==5) idx=5;
-	else idx=6;
- 
+
+	if (MUSIC_SET==1) {
+		/* Set 1 only has two music files, and they alternate:
+		   stage 1,3,5,...->level1 ; stage 2,4,6,...->level2 */ 
+		idx=((level%2)==1) ? 1 : 2;
+	} else {
+		if ((level%6)==1) idx=1;
+		else if ((level%6)==2) idx=2;
+		else if ((level%6)==3) idx=3;
+		else if ((level%6)==4) idx=4;
+		else if ((level%6)==5) idx=5;
+		else idx=6;
+	} /* if */ 
+
 	sprintf(path,"sound/set%d/level%d",MUSIC_SET,idx);
 	Sound_create_music(path,-1);
 } /* play_level_music */
-
 
 void CGame::init_game(const char *mapname)
 {
