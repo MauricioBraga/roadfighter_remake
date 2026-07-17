@@ -1,0 +1,73 @@
+name: Build and release (Windows)
+
+# Runs whenever a version tag is pushed (e.g. "v1.0.0"), or manually via the
+# "Run workflow" button in the Actions tab.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to create the GitHub Release and upload the zip
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Uses MSYS2/MinGW64, the same environment already proven to build
+      # this project successfully on a developer machine (pacman-provided
+      # SDL3 packages, not vcpkg).
+      - name: Set up MSYS2 (MinGW64)
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-sdl3
+            mingw-w64-x86_64-sdl3-image
+            mingw-w64-x86_64-sdl3-ttf
+            mingw-w64-x86_64-sdl3-mixer
+            zip
+
+      - name: Configure (CMake)
+        run: |
+          cmake -B build -S . -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: |
+          cmake --build build
+
+      # CMakeLists.txt already copies the runtime DLLs and the
+      # fonts/graphics/maps/sound folders next to roadfighter.exe as a
+      # post-build step, so the output folder is already a ready-to-run copy
+      # of the game. We just need to zip it up.
+      - name: Package release zip
+        run: |
+          version="${GITHUB_REF_NAME:-dev}"
+          zip_name="roadfighter-windows-x64-${version}.zip"
+          (cd build && zip -r "../${zip_name}" .)
+          echo "ZIP_NAME=${zip_name}" >> "$GITHUB_ENV"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: roadfighter-windows-x64
+          path: ${{ env.ZIP_NAME }}
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ZIP_NAME }}
+          generate_release_notes: true
