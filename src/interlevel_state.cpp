@@ -21,6 +21,8 @@ extern int SCREEN_X;
 extern int SCREEN_Y;
 extern int start_level;
 
+extern int MUSIC_SET;
+
 const char *maps[6] = {"maps/level1.mg2",
 		       "maps/level2.mg2",
 		       "maps/level3.mg2",
@@ -46,7 +48,10 @@ int CRoadFighter::interlevel_cycle(void)
 			score1=*l[0];
 			if (n_players>1 && l.Length()>1) score2=*l[1];
 		} else {
-			Sound_create_music("sound/start",0);
+			char music_path[64];
+			sprintf(music_path,"sound/set%d/start", MUSIC_SET);
+			Sound_create_music(music_path,0);
+			// Sound_create_music("sound/start",0);
 		} /* if */ 
 
 		if (current_level>nlevels) {

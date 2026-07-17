@@ -454,11 +454,9 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
     	CHEAT = (CHEAT==1) ? 0 : 1;
 	} /* if */ 
 
-	// chaveia entre os dois sets de música (Jorito original e Wolf):
+	// reinicia a música imediatamente, ao pressionar F9.
 	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
-		MUSIC_SET = (MUSIC_SET==1) ? 2 : 1;
-		/* Se a música da fase já estiver tocando, reinicia agora com o novo set: */ 
-		if (start_delay==0 && start_delay2==0) play_level_music(current_level);
+    	if (start_delay==0 && start_delay2==0) play_level_music(current_level);
 	} /* if */
 
 	if (paused) return true;

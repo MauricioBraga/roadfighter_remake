@@ -14,13 +14,20 @@
 
 int gameover_time=25;
 
+extern int MUSIC_SET;
+
 int CRoadFighter::gameover_cycle(void)
 {
 	if (state_timmer==0) {
 		gameover_state=0;
 		gameover_timmer=0;
 		Sound_music_volume(MIX_MAX_VOLUME);
-		Sound_create_music("sound/gameover",0);
+		
+		char music_path[64];
+		sprintf(music_path,"sound/set%d/gameover",MUSIC_SET);
+		Sound_create_music(music_path,0);
+
+		// Sound_create_music("sound/gameover",0);
 	} /* if */ 
 
 	if (gameover_state==1) {

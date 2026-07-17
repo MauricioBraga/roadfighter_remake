@@ -24,6 +24,9 @@ extern int SCREEN_Y;
 // in order to draw a cheat indicator on screen.
 extern int CHEAT;
 
+extern int MUSIC_SET;
+
+
 CRoadFighter::CRoadFighter(void)
 {
 	int i;
@@ -188,6 +191,13 @@ bool CRoadFighter::cycle(void)
 		for(i=0;i<nk;i++) keyboard[i]=sdl_keys[i] ? 1 : 0;
 		for(;i<SDL_SCANCODE_COUNT;i++) keyboard[i]=0;
 	}
+
+	// chaveia entre os dois sets de música (Jorito original e Wolf):
+	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
+		MUSIC_SET = (MUSIC_SET==1) ? 2 : 1;
+		
+	} /* if */
+
 	// output_debug_message("CRoadFighter::cycle: estado=%d, state_timmer=%d\n",state,state_timmer);
 	switch(state) {
 	case PRESENTATION_STATE:state=presentation_cycle();

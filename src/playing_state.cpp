@@ -20,6 +20,8 @@ bool load_replay=false;
 
 extern int start_level;
 
+extern int MUSIC_SET;
+
 int CRoadFighter::playing_cycle(void)
 {
 	if (state_timmer==0) {
@@ -99,7 +101,10 @@ int CRoadFighter::playing_cycle(void)
 	} else {
 		if (!playing_reachedend && game->level_completed()) {
 			playing_reachedend=true;
-			Sound_create_music("sound/levelcomplete",0);
+			char music_path[64];
+			sprintf(music_path,"sound/set%d/levelcomplete",MUSIC_SET);
+			Sound_create_music(music_path,0);
+			// Sound_create_music("sound/levelcomplete",0);
 		} /* if */ 
 	} /* if */ 
 
