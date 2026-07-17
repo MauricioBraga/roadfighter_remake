@@ -1,4 +1,4 @@
-Dependencies (SDL3 versions):
+Dependencies (SDL3 lib versions):
  SDL3
  SDL3_image
  SDL3_ttf
