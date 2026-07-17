@@ -150,25 +150,27 @@ void CGame::init_game(const char *mapname)
 
 	fuel_sfc=IMG_Load("graphics/fuel.bmp");
 
-	
+	// grid formation
 	if (start_delay!=default_start_delay) { /* There is a SEMAPHORE */ 
+		
+		// grid now has cars with different colors instead of just blue.
 		o=new CEnemyRacerCarObject((dx/2)-30,dy-176,enemy_tiles[0],start_delay,this);
 		objects.Add(o);
-		o=new CEnemyRacerCarObject((dx/2)+14,dy-176,enemy_tiles[0],start_delay,this);
+		o=new CEnemyRacerCarObject((dx/2)+14,dy-176,enemy_tiles[1],start_delay,this);
 		objects.Add(o);
-		o=new CEnemyRacerCarObject((dx/2)-30,dy-224,enemy_tiles[0],start_delay,this);
+		o=new CEnemyRacerCarObject((dx/2)-30,dy-224,enemy_tiles[2],start_delay,this);
 		objects.Add(o);
 		o=new CEnemyRacerCarObject((dx/2)+14,dy-224,enemy_tiles[0],start_delay,this);
 		objects.Add(o);
-		o=new CEnemyRacerCarObject((dx/2)-30,dy-272,enemy_tiles[0],start_delay,this);
+		o=new CEnemyRacerCarObject((dx/2)-30,dy-272,enemy_tiles[1],start_delay,this);
 		objects.Add(o);
-		o=new CEnemyRacerCarObject((dx/2)+14,dy-272,enemy_tiles[0],start_delay,this);
+		o=new CEnemyRacerCarObject((dx/2)+14,dy-272,enemy_tiles[2],start_delay,this);
 		objects.Add(o);
 		o=new CEnemyRacerCarObject((dx/2)-30,dy-320,enemy_tiles[0],start_delay,this);
 		objects.Add(o);
-		o=new CEnemyRacerCarObject((dx/2)+14,dy-320,enemy_tiles[0],start_delay,this);
+		o=new CEnemyRacerCarObject((dx/2)+14,dy-320,enemy_tiles[1],start_delay,this);
 		objects.Add(o);
-		o=new CEnemyRacerCarObject((dx/2)-30,dy-368,enemy_tiles[0],start_delay,this);
+		o=new CEnemyRacerCarObject((dx/2)-30,dy-368,enemy_tiles[2],start_delay,this);
 		objects.Add(o);
 		o=new CEnemyRacerCarObject((dx/2)+14,dy-368,enemy_tiles[0],start_delay,this);
 		objects.Add(o);
