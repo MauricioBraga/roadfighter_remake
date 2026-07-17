@@ -15,6 +15,7 @@
 
 #include "auxiliar.h"
 #include "debug.h"
+#include "stdio.h"
 
 extern int MAX_SPEED;
 int PLAYING_WINDOW=384+64;
@@ -34,6 +35,9 @@ int FUEL_LOSS=256;
 
 // Cheats:
 int CHEAT=0;	/* CHEAT==1 disables fuel consumption */
+
+// Music sets:
+int MUSIC_SET=1;	/* 1 = sound/set1 (Jorito original), 2 = sound/set2 (Wolf) (toggled with F9) */
 
 // Enemy: 
 int ENEMY_SPEED=(13<<8);
@@ -69,6 +73,22 @@ int fastcar_chance[4][6]={{-1,-1,-1,-1,-1,-1},
 
 const int fade_time=25;
 const int default_start_delay=50;
+
+static void play_level_music(int level)
+{
+	char path[64];
+	int idx;
+ 
+	if ((level%6)==1) idx=1;
+	else if ((level%6)==2) idx=2;
+	else if ((level%6)==3) idx=3;
+	else if ((level%6)==4) idx=4;
+	else if ((level%6)==5) idx=5;
+	else idx=6;
+ 
+	sprintf(path,"sound/set%d/level%d",MUSIC_SET,idx);
+	Sound_create_music(path,-1);
+} /* play_level_music */
 
 
 void CGame::init_game(const char *mapname)
@@ -147,7 +167,7 @@ void CGame::init_game(const char *mapname)
 
 	empty_sfc=IMG_Load("graphics/empty.bmp");
 	fuelscores_sfc=IMG_Load("graphics/fuel_scores.bmp");
-//	start_sfc=IMG_Load("graphics/start.bmp");
+	//	start_sfc=IMG_Load("graphics/start.bmp");
 	checkpoint_sfc=IMG_Load("graphics/checkpoint.bmp");
 	goal_sfc=IMG_Load("graphics/goal.bmp");
 	obstacles_sfc=IMG_Load("graphics/obstacles.bmp");
@@ -434,6 +454,13 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
     	CHEAT = (CHEAT==1) ? 0 : 1;
 	} /* if */ 
 
+	// chaveia entre os dois sets de música (Jorito original e Wolf):
+	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
+		MUSIC_SET = (MUSIC_SET==1) ? 2 : 1;
+		/* Se a música da fase já estiver tocando, reinicia agora com o novo set: */ 
+		if (start_delay==0 && start_delay2==0) play_level_music(current_level);
+	} /* if */
+
 	if (paused) return true;
 
 	if (start_delay>0) {
@@ -451,13 +478,15 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 				if ((current_level%2)==1) Sound_create_music("sound/game_theme",-1);
 									 else Sound_create_music("sound/game_theme2",-1);
 			*/
+				/*
 				if ((current_level%6)==1) Sound_create_music("sound/level1",-1);
 				else if ((current_level%6)==2) Sound_create_music("sound/level2",-1);
 				else if ((current_level%6)==3) Sound_create_music("sound/level3",-1);
 				else if ((current_level%6)==4) Sound_create_music("sound/level4",-1);
 				else if ((current_level%6)==5) Sound_create_music("sound/level5",-1);
 				else Sound_create_music("sound/level6",-1);
-
+				*/
+				play_level_music(current_level);
 			} /* if */ 
 		} /* if */ 
 	} /* if */ 
