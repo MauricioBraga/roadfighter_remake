@@ -16,7 +16,7 @@ http://roadfighter.jorito.net
 
 ## Goals of the project
 
-This project was developed before I joined the Braingames group. Despite that, I have always been a fan of this game, and having previously created a patch to the original MSX *Road Fighter* with a new wave soundtrack (available <a href="https://github.com/MauricioBraga/ROAD-FIGHTER-WAVE"> here </a>), I decided to also bring a few elements to this remake:
+This project was developed before I joined the Braingames group. Since I have always been a fan of this game, and having previously created a patch to the original MSX *Road Fighter* with a new wave soundtrack (available <a href="https://github.com/MauricioBraga/ROAD-FIGHTER-WAVE"> here </a>), I decided to also bring a few elements I feel are interesting / important to this remake:
 
 - SDL3 support, replacing the old deprecated SDL 1.2 lib used in the original game, making it also possible to generate 64 bit binaries of the game.
 - New music to each level (allowing the use of different sound sets).
