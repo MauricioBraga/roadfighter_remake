@@ -23,7 +23,7 @@ This project was developed before I joined the Braingames group. Despite that, I
 - Minor enhancements (cheat mode, new SFX, maybe new graphic and animations)
 
 
-## Original RoadFighter remake credits:
+## Original RoadFighter remake credits
 
 - Programming: Santi Ontañón
 - Graphics: Miikka Poikela
@@ -32,7 +32,7 @@ This project was developed before I joined the Braingames group. Despite that, I
 * Copyright (c) 2003-2009 **(Brain Games)** 
 
 
-## Special Thanks To:
+## Thanks
 
  * The Retro Remakes crew, for organizing this wonderful competition!
  * Konami, for releasing the original game!
