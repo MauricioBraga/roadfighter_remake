@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # All these are provided by vcpkg (Windows/VS Code) or by your system's
-# SDL3 packages (Linux/macOS). 
+# SDL3 packages (Linux/macOS)
 find_package(SDL3 CONFIG REQUIRED)
 find_package(SDL3_image CONFIG REQUIRED)
 find_package(SDL3_ttf CONFIG REQUIRED)
