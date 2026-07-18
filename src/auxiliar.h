@@ -9,19 +9,6 @@
 #endif
 //#define abs(a) ((a)<0 ? (-(a)) : (a))
 
-
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-// PPC values:
-#define AMASK  0xff000000
-#define BMASK  0x000000ff
-#define GMASK  0x0000ff00
-#define RMASK  0x00ff0000
-#define AOFFSET 0
-#define BOFFSET 3
-#define GOFFSET 2
-#define ROFFSET 1
-
-#else
 // Intel values:
 #define AMASK  0xff000000
 #define BMASK  0x000000ff
@@ -31,8 +18,6 @@
 #define BOFFSET 0
 #define GOFFSET 1
 #define ROFFSET 2
-
-#endif
 
 #ifndef _WIN32
 #ifndef HAVE_STRLWR

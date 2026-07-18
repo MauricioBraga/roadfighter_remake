@@ -89,11 +89,11 @@ SDL_Surface *initializeSDL(bool start_fullscreen)
 
 	atexit(SDL_Quit);
 
-	 Uint32 win_flags = start_fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
-	 /* SDL_CreateWindow in this environment uses the legacy compatibility
-		 overload: SDL_CreateWindow(const char *title, int w, int h, SDL_WindowFlags)
-		 so pass width/height directly. */
-	 window_wnd = SDL_CreateWindow(application_name, SCREEN_X, SCREEN_Y, win_flags);
+	Uint32 win_flags = start_fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
+	/* SDL_CreateWindow in this environment uses the legacy compatibility
+		overload: SDL_CreateWindow(const char *title, int w, int h, SDL_WindowFlags)
+		so pass width/height directly. */
+	window_wnd = SDL_CreateWindow(application_name, SCREEN_X, SCREEN_Y, win_flags);
 	if (window_wnd==0) {
 		output_debug_message("Couldn't create the %ix%i window: %s\n", SCREEN_X, SCREEN_Y, SDL_GetError());
 		exit(-1);
@@ -131,13 +131,17 @@ void toggle_fullscreen(void)
 
 	fullscreen = !fullscreen;
 	SDL_SetWindowFullscreen(window_wnd, fullscreen);
+	SDL_SyncWindow(window_wnd);
 
 	if (refresh_screen_surface()==0) {
 		/* if we can't get a surface back, bail out gracefully */
 		fullscreen = !fullscreen;
 	} else {
-		if (fullscreen) SDL_HideCursor();
-			else SDL_ShowCursor();
+		if (fullscreen) {
+			SDL_HideCursor();
+		} else {
+			SDL_ShowCursor();
+		} /* if */
 	} /* if */
 
 	// Resume_playback();
@@ -185,12 +189,12 @@ int main(int argc, char** argv)
     bool quit = false;
 
 
-	time=init_time=GetTickCount();
 	screen_sfc = initializeSDL(fullscreen);
 	if (screen_sfc==0) return 0;
 
 	game=new CRoadFighter();
 
+	time=init_time=GetTickCount();
 	while (!quit) {
 		while( SDL_PollEvent( &event ) ) {
             switch( event.type ) {
@@ -230,6 +234,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 
 						if ((modifiers&SDL_KMOD_GUI) != 0) {
 							toggle_fullscreen();
+							time=GetTickCount();
 						} /* if */
 					} /* if */
 #endif
@@ -241,6 +246,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 
 						if ((modifiers&SDL_KMOD_ALT)!=0) {
 							toggle_fullscreen();
+							time=GetTickCount();
 						} /* if */
 					} /* if */
                     break;

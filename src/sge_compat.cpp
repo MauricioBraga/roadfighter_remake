@@ -213,8 +213,8 @@ SDL_Rect sge_transform(SDL_Surface *src, SDL_Surface *dst,
 
 	/* Corners of the source, relative to the hotspot (px,py), scaled and
 	 * rotated, to find the destination bounding box. */
-	double cornersx[4]={0-px, src->w-px, 0-px, src->w-px};
-	double cornersy[4]={0-py, 0-py, src->h-py, src->h-py};
+	double cornersx[4]={(double)0-px, (double)src->w-px, (double)0-px, (double)src->w-px};
+	double cornersy[4]={(double)0-py, (double)0-py, (double)src->h-py, (double)src->h-py};
 
 	double minx=1e30,maxx=-1e30,miny=1e30,maxy=-1e30;
 	int i;
