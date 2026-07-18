@@ -53,7 +53,8 @@ bool CEnemyCarObject::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 	if (last_collision!=0) {
 		if (last_collision->get_x()<x) slide_direction=1;
 								  else slide_direction=-1;
-		slide_speed=std::min(last_collision->get_y_speed(), y_speed);
+
+		slide_speed=(last_collision->get_y_speed() < y_speed) ? last_collision->get_y_speed() : y_speed;
 		slide_timmer=8;
 
 		last_collision=0;

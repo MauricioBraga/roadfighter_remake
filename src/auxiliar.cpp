@@ -79,9 +79,9 @@ SDL_Surface *load_maskedimage(char *imagefile,char *maskfile,char *path)
     SDL_Surface *tmp;
 	SDL_Surface *mask;
 
-	sprintf(name,"%s%s",path,imagefile);
+	snprintf(name, sizeof(name), "%s%s", path, imagefile);
 	tmp=IMG_Load(name);
-	sprintf(name,"%s%s",path,imagefile);
+	snprintf(name, sizeof(name), "%s%s", path, imagefile);
 	mask=IMG_Load(name);
 
     if (tmp==0 ||
@@ -192,7 +192,11 @@ void maximumpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 	g=p[GOFFSET];
 	b=p[BOFFSET];
 	
-	*(Uint32 *)p = SDL_MapRGB(surface->format,std::max(r,r2),std::max(g,g2),std::max(b,b2));
+	*(Uint32 *)p = SDL_MapRGB(surface->format,
+		(r > r2) ? r:r2,
+		(g > g2) ? g:g2,
+		(b > b2) ? b:b2
+	);
 }
 
 
