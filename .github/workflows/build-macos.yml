@@ -1,0 +1,73 @@
+name: Build and release (macOS)
+
+# Runs whenever a version tag is pushed (e.g. "v1.0.0"), or manually via the
+# "Run workflow" button in the Actions tab.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to create the GitHub Release and upload the zips
+
+jobs:
+  build-macos:
+    # macos-14+ runners are Apple Silicon (arm64). We only target that
+    # architecture, so no build matrix is needed.
+    runs-on: macos-14
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # SDL3/SDL3_image/SDL3_ttf/SDL3_mixer + dylibbundler (to bundle the
+      # dylibs into the release so the zip is self-contained and doesn't
+      # require the end user to have Homebrew/SDL3 installed).
+      - name: Install dependencies (Homebrew)
+        run: |
+          brew install cmake ninja sdl3 sdl3_image sdl3_ttf sdl3_mixer dylibbundler
+
+      - name: Configure (CMake)
+        run: |
+          cmake -B build -S . -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: |
+          cmake --build build
+
+      # CMakeLists.txt already copies fonts/graphics/maps/sound next to the
+      # binary as a post-build step (that part isn't Windows-only), so
+      # build/ is already a ready-to-run copy of the game - except for the
+      # dylibs, which on macOS aren't copied automatically the way DLLs are
+      # on Windows. dylibbundler takes care of that: it copies every
+      # non-system dylib the executable depends on into build/libs and
+      # rewrites the binary to look for them there via @executable_path,
+      # instead of at their original Homebrew path.
+      - name: Bundle dylibs
+        run: |
+          mkdir -p build/libs
+          dylibbundler -od -b \
+            -x build/roadfighter \
+            -d build/libs \
+            -p '@executable_path/libs/'
+
+      - name: Package release zip
+        run: |
+          version="${GITHUB_REF_NAME:-dev}"
+          zip_name="roadfighter-macos-arm64-${version}.zip"
+          (cd build && zip -r "../${zip_name}" .)
+          echo "ZIP_NAME=${zip_name}" >> "$GITHUB_ENV"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: roadfighter-macos-arm64
+          path: ${{ env.ZIP_NAME }}
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ZIP_NAME }}
+          generate_release_notes: true
