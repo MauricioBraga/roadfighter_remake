@@ -92,7 +92,7 @@ CRoadFighter::CRoadFighter(void)
 				   "GAME PROGRAMMING: Santi Ontañón (Brain)    "
 				   "GRAPHICS: Miikka Poikela (MP83)    "
 				   "MUSIC/SFX: Jorrith Schaap (Jorito)    "
-				   "ADDITIONAL PROGRAMMING: Maurício Braga (Mauk)"
+				   "ADDITIONAL PROGRAMMING: Maurício Braga (Mauk)    "
 				   "BETA TESTING: Jason Eames (JEames), Miikka Poikela (MP83), Jorrith Schaap (Jorito), Santi Ontañón (Brain),  Maurício Braga (Mauk)"
 				   "        ";
 		c.r=c.g=c.b=128;
