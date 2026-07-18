@@ -51,7 +51,7 @@ The Braingames team (me included) would like to make it clear that we are not re
 This is a not-for-profit remake. So, we don't get any money from remaking
 this or any other Konami titles.
 
-Also, the repository will be removed if Konami, Warner or their legal representatives ask me to do so.
+Also, the repository will be removed if Konami or their legal representatives ask me to do so.
 
 
 
