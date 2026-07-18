@@ -345,11 +345,16 @@ CGame::~CGame(void)
 
 	while(!focusing_objects.EmptyP()) focusing_objects.ExtractIni();
 
+	/* Explicitly stop every channel instead of busy-waiting for them to
+	   finish naturally (Sound_any_playing()): a channel left looping
+	   forever - e.g. the engine sound, if not halted somewhere along the
+	   way - would otherwise hang the game here indefinitely. */ 
+	Sound_halt_all();
+	
 	// removed and substituted by Sound_halt_all() to stop all sound channels, 
 	// because it could crash in SDL3 when you switched window / fullscreen mode.
 	// while(Sound_any_playing());
-	Sound_halt_all();
-	
+
 	Sound_delete_sound(S_takefuel);
 	Sound_delete_sound(S_redlight);
 	Sound_delete_sound(S_greenlight);

@@ -251,8 +251,22 @@ int Sound_play_loop_ch(SOUNDT s,int channel,int loops)
 	if (t==0) return -1;
 
 	MIX_SetTrackAudio(t,s);
-	MIX_SetTrackLoops(t,loops);
-	MIX_PlayTrack(t,0);
+
+	/* MIX_SetTrackLoops() only affects a track that is ALREADY playing;
+	   calling it before MIX_PlayTrack() has no effect, since MIX_PlayTrack()
+	   with options=0 (re)starts the track with the *default* loop count
+	   (0 = play once), silently discarding whatever was requested here.
+	   The loop count must be passed as a MIX_PlayTrack() property instead. */ 
+	SDL_PropertiesID props=SDL_CreateProperties();
+	SDL_SetNumberProperty(props,MIX_PROP_PLAY_LOOPS_NUMBER,loops);
+	MIX_PlayTrack(t,props);
+	SDL_DestroyProperties(props);
+
+	// original code:
+	// MIX_SetTrackAudio(t,s);
+	// MIX_SetTrackLoops(t,loops);  // <-- track still not being played here
+	// MIX_PlayTrack(t,0);  // <-- isso (re)inicia com valores padrão, sobrescrevendo o loop configurado acima
+
 
 	return ch;
 } /* Sound_play_loop_ch */
@@ -263,6 +277,13 @@ void Sound_halt_channel(int channel)
 	if (channel<0 || channel>=n_channels) return;
 	if (channel_tracks[channel]!=0) MIX_StopTrack(channel_tracks[channel],0);
 } /* Sound_halt_channel */
+
+
+void Sound_halt_all(void)
+{
+	int i;
+	for(i=0;i<n_channels;i++) Sound_halt_channel(i);
+} /* Sound_halt_all */
 
 
 void Sound_set_channel_frequency(int channel,float ratio)
@@ -336,9 +357,17 @@ void Sound_create_music(const char *f1,int loops)
 			music_audio=Sound_create_stream(f1);
 			music_track=MIX_CreateTrack(g_mixer);
 			if (music_track!=0 && music_audio!=0) {
+				SDL_PropertiesID props;
+
 				MIX_SetTrackAudio(music_track,music_audio);
-				MIX_SetTrackLoops(music_track,loops);
-				MIX_PlayTrack(music_track,0);
+
+				/* See Sound_play_loop_ch() for why the loop count has to be
+				   passed as a MIX_PlayTrack() property instead of via
+				   MIX_SetTrackLoops() beforehand. */ 
+				props=SDL_CreateProperties();
+				SDL_SetNumberProperty(props,MIX_PROP_PLAY_LOOPS_NUMBER,loops);
+				MIX_PlayTrack(music_track,props);
+				SDL_DestroyProperties(props);
 			} /* if */
 		} else {
 			music_audio=0;
@@ -397,10 +426,3 @@ void Sound_music_volume(int volume)
 	if (volume>127) volume=127;
 	if (music_track!=0) MIX_SetTrackGain(music_track, volume/127.0F);
 } /* Sound_music_volume */
-
-// stop all sound channels
-void Sound_halt_all(void)
-{
-	int i;
-	for(i=0;i<n_channels;i++) Sound_halt_channel(i);
-} /* Sound_halt_all */

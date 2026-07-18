@@ -95,6 +95,8 @@ int CRoadFighter::playing_cycle(void)
 					fclose(replay_fp);
 					replay_fp=0;
 				} /* if */ 
+				delete game;
+				game=0;
 				return GAMEOVER_STATE;
 			} /* if */ 
 		} /* if */ 
