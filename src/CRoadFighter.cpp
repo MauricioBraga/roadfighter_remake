@@ -89,10 +89,11 @@ CRoadFighter::CRoadFighter(void)
 		const char *text="        "
 				   "Game created for the RETROREMAKES REMAKE COMPETITION"
 				   "        "
-				   "PROGRAMMING: Santi Onta��n (Brain)    "
-				   "GRAPHICS: Miikka Poikela (McBain)    "
+				   "GAME PROGRAMMING: Santi Ontanon (Brain)    "
+				   "GRAPHICS: Miikka Poikela (MP83)    "
 				   "MUSIC/SFX: Jorrith Schaap (Jorito)    "
-				   "BETA TESTING: Jason Eames (JEames), Miikka Poikela (McBain), Jorrith Schaap (Jorito), Santi Onta��n (Brain)"
+				   "ADDITIONAL PROGRAMMING: Mauricio Braga (Mauk)"
+				   "BETA TESTING: Jason Eames (JEames), Miikka Poikela (MP83), Jorrith Schaap (Jorito), Santi Ontanon (Brain),  Mauricio Braga (Mauk)"
 				   "        ";
 		c.r=c.g=c.b=128;
 
