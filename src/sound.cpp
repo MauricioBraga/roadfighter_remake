@@ -397,3 +397,10 @@ void Sound_music_volume(int volume)
 	if (volume>127) volume=127;
 	if (music_track!=0) MIX_SetTrackGain(music_track, volume/127.0F);
 } /* Sound_music_volume */
+
+// stop all sound channels
+void Sound_halt_all(void)
+{
+	int i;
+	for(i=0;i<n_channels;i++) Sound_halt_channel(i);
+} /* Sound_halt_all */

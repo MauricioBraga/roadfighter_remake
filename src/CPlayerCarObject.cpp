@@ -314,8 +314,11 @@ bool CPlayerCarObject::cycle(unsigned char *keyboard,unsigned char *old_keyboard
 		if (game->S_fuelempty!=0) Sound_play(game->S_fuelempty);
 	} /* if */ 
 
-	if (state!=4 && y>0) {
-		if (fuel>0 && game->S_carengine!=0) {
+	// condition fuel > 0 was moved to the first if, so else will run
+	// whenever the player is out of fuel, or when the player is dead (state==4)
+	// to stop sound.
+	if (state!=4 && y>0 && fuel > 0) {
+		if (game->S_carengine!=0) {
 			if ((sound_timmer&0x07)==0) {
 
 				float f;

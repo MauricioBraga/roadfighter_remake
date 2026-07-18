@@ -86,10 +86,11 @@ public:
 	~CFuelObject(void);
 
 	virtual bool cycle(unsigned char *keyboard,unsigned char *old_keyboard);
-
+	virtual void draw(int sx,int sy,SDL_Surface *screen);
 protected:
 	int y_precision,x_precision;
 	int y_speed,x_speed;
+	int blink_timmer;
 };
 
 

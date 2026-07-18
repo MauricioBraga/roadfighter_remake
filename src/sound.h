@@ -50,6 +50,8 @@ void Sound_release_music(void);
 void Sound_pause_music(void);
 void Sound_unpause_music(void);
 
+void Sound_halt_all(void);
+
 void Sound_music_volume(int volume);
 
 /* These functions are AGRESIVE! (i.e. they actually STOP the mixer and restart it) */

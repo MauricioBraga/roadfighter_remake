@@ -345,8 +345,11 @@ CGame::~CGame(void)
 
 	while(!focusing_objects.EmptyP()) focusing_objects.ExtractIni();
 
-	while(Sound_any_playing());
-
+	// removed and substituted by Sound_halt_all() to stop all sound channels, 
+	// because it could crash in SDL3 when you switched window / fullscreen mode.
+	// while(Sound_any_playing());
+	Sound_halt_all();
+	
 	Sound_delete_sound(S_takefuel);
 	Sound_delete_sound(S_redlight);
 	Sound_delete_sound(S_greenlight);

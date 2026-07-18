@@ -123,7 +123,11 @@ SDL_Surface *initializeSDL(bool start_fullscreen)
  * dance that SDL 1.2 required. */
 void toggle_fullscreen(void)
 {
-	Stop_playback();
+	// removed because it was crashing in SDL 3 when you switched window / fullscreen mode. 
+	// There's no need in SDL3 to 
+	// stop the audio engine when you switch to / from fullscreen to window mode.
+	// video and audio are independent in SDL 3.
+	// Stop_playback();
 
 	fullscreen = !fullscreen;
 	SDL_SetWindowFullscreen(window_wnd, fullscreen);
@@ -136,7 +140,7 @@ void toggle_fullscreen(void)
 			else SDL_ShowCursor();
 	} /* if */
 
-	Resume_playback();
+	// Resume_playback();
 } /* toggle_fullscreen */
 
 

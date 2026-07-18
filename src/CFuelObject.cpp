@@ -19,11 +19,15 @@ CFuelObject::CFuelObject(int nx,int ny,CTile *t,CGame *g) : CObject(nx,ny,t,CONS
 {
 	y_speed=0;
 	y_precision=0;
+	
 
 	state=0;
 
 	x_speed=0;
 	x_precision=0;
+
+	blink_timmer=0;
+
 } /* CFuelObject::CFuelObject */ 
 
 
@@ -35,6 +39,9 @@ CFuelObject::~CFuelObject(void)
 
 bool CFuelObject::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 {
+	// count time to blink the fuel object (for visual effect)
+	blink_timmer++;
+	
 	y_precision+=y_speed;
 	while(y_precision>(1<<8)) {
 		y++;
@@ -72,3 +79,16 @@ bool CFuelObject::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 	return true;
 } /* CFuelObject::cycle */ 
 
+
+// override draw method to implement any kind of animation / blinking effect for fuel objects
+void CFuelObject::draw(int sx,int sy,SDL_Surface *screen)
+{
+	// removed for now, since the effect kind of sucked. :p
+	/* Blink: visible for 2 frames, invisible for the next 2, and so on.  
+	if (((blink_timmer/2)%2)==0) {
+		CObject::draw(sx,sy,screen);
+	} if */ 
+	
+	CObject::draw(sx,sy,screen);
+	
+} /* CFuelObject::draw */
