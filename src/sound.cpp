@@ -305,6 +305,13 @@ void Sound_set_channel_pan(int channel,float left,float right)
 	MIX_SetTrackStereo(channel_tracks[channel],&gains);
 } /* Sound_set_channel_pan */
 
+void Sound_set_channel_gain(int channel,float gain)
+{
+
+	if (channel<0 || channel>=n_channels) return;
+	if (channel_tracks[channel]!=0) MIX_SetTrackGain(channel_tracks[channel],gain);
+} /* Sound_set_channel_gain */
+
 
 bool Sound_channel_playing(int channel)
 {

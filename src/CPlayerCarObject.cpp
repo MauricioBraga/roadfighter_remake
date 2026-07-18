@@ -26,6 +26,8 @@ extern int FUEL_LOSS;
 // from other files, like CGame.cpp, where they are defined.
 extern int CHEAT;
 
+extern float ENGINE_VOLUME;
+
 extern int ENEMY_SPEED;
 
 const int explosion_tiles=1;
@@ -341,6 +343,8 @@ bool CPlayerCarObject::cycle(unsigned char *keyboard,unsigned char *old_keyboard
 				} /* if */
 				Sound_set_channel_frequency(enginesound_channel,f);
 				Sound_set_channel_pan(enginesound_channel,pan_l,pan_r);
+				// adjust volume of the engine SFX
+				Sound_set_channel_gain(enginesound_channel,ENGINE_VOLUME);
 
 				if (state==5 || state==6) {
 					float f;

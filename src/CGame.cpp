@@ -43,6 +43,10 @@ int MUSIC_SET=1;	/* 1..N_MUSIC_SETS, cycled with F9
 					* 2 = sound/set2 (Jorito Extended (F1 Spirit) ) 
 					* 3 = sound/set3 (Wolf alternative sound set) */
 
+// Engine volume:
+float ENGINE_VOLUME=1.0F;	/* 0.0..1.0, adjusted with -/+ */
+ 
+
 // Enemy: 
 int ENEMY_SPEED=(13<<8);
 int ENEMY_HSPEED=416;
@@ -476,6 +480,18 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 	// reinicia a música imediatamente, ao pressionar F9.
 	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
     	if (start_delay==0 && start_delay2==0) play_level_music(current_level);
+	} /* if */
+
+	// Ajusta o volume do som do motor com - (diminui) e + (aumenta),
+	// até o máximo (1.0) já usado por padrão no jogo:
+	if (keyboard[SDL_SCANCODE_MINUS] || keyboard[SDL_SCANCODE_KP_MINUS]) {
+		ENGINE_VOLUME-=0.02F;
+		if (ENGINE_VOLUME<0.0F) ENGINE_VOLUME=0.0F;
+	} /* if */ 
+
+	if (keyboard[SDL_SCANCODE_EQUALS] || keyboard[SDL_SCANCODE_KP_PLUS]) {
+		ENGINE_VOLUME+=0.02F;
+		if (ENGINE_VOLUME>1.0F) ENGINE_VOLUME=1.0F;
 	} /* if */
 
 	if (paused) return true;

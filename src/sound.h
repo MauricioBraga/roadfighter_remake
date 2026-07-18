@@ -42,6 +42,7 @@ int Sound_play_loop_ch(SOUNDT s,int channel,int loops);
 void Sound_halt_channel(int channel);
 void Sound_set_channel_frequency(int channel,float ratio);
 void Sound_set_channel_pan(int channel,float left,float right);
+void Sound_set_channel_gain(int channel,float gain);
 bool Sound_channel_playing(int channel);
 bool Sound_any_playing(void);
 
@@ -54,7 +55,7 @@ void Sound_halt_all(void);
 
 void Sound_music_volume(int volume);
 
-/* These functions are AGRESIVE! (i.e. they actually STOP the mixer and restart it) */
+/* These functions are AGRESSIVE! (i.e. they actually STOP the mixer and restart it) */
 void Stop_playback(void);
 void Resume_playback(void);
 int Resume_playback(int nc,int nr);
