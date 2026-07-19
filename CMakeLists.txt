@@ -13,7 +13,16 @@ find_package(SDL3_mixer CONFIG REQUIRED)
 
 file(GLOB ROADFIGHTER_SOURCES CONFIGURE_DEPENDS src/*.cpp)
 
-add_executable(roadfighter ${ROADFIGHTER_SOURCES})
+# On Windows, an executable is built as a "Console" subsystem app by
+# default, which pops up a console/terminal window alongside the actual
+# game window. WIN32 here tells the linker to build it as a GUI-subsystem
+# app instead, so only the game's own window shows up. This has no effect
+# on Linux/macOS (WIN32 is simply ignored there).
+if (WIN32)
+	add_executable(roadfighter WIN32 ${ROADFIGHTER_SOURCES})
+else()
+	add_executable(roadfighter ${ROADFIGHTER_SOURCES})
+endif()
 target_include_directories(roadfighter PRIVATE src)
 
 target_link_libraries(roadfighter PRIVATE
