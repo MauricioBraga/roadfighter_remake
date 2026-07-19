@@ -191,6 +191,9 @@ int Sound_play(SOUNDT s)
 		MIX_SetTrackAudio(t,s);
 		MIX_SetTrackFrequencyRatio(t,1.0F);
 		MIX_SetTrackStereo(t,NULL);
+		// restore normal gain (in case it was changed by 
+		// the user by pressing + or - to control engine sound..
+		MIX_SetTrackGain(t,1.0F);
 		MIX_PlayTrack(t,0);
 		return ch;
 	} /* if */
@@ -252,6 +255,13 @@ int Sound_play_loop_ch(SOUNDT s,int channel,int loops)
 
 	MIX_SetTrackAudio(t,s);
 
+	// make sure that every new sound to be played will
+	// have the standard volume, not inheriting the volume
+	// used by the sound engine.
+	MIX_SetTrackFrequencyRatio(t,1.0F);
+	MIX_SetTrackStereo(t,NULL);
+	MIX_SetTrackGain(t,1.0F);
+
 	/* MIX_SetTrackLoops() only affects a track that is ALREADY playing;
 	   calling it before MIX_PlayTrack() has no effect, since MIX_PlayTrack()
 	   with options=0 (re)starts the track with the *default* loop count
@@ -263,7 +273,6 @@ int Sound_play_loop_ch(SOUNDT s,int channel,int loops)
 	SDL_DestroyProperties(props);
 
 	// original code:
-	// MIX_SetTrackAudio(t,s);
 	// MIX_SetTrackLoops(t,loops);  // <-- track still not being played here
 	// MIX_PlayTrack(t,0);  // <-- isso (re)inicia com valores padrão, sobrescrevendo o loop configurado acima
 
