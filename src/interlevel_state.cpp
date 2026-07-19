@@ -62,23 +62,23 @@ int CRoadFighter::interlevel_cycle(void)
 
 		if (current_level<6) {
 			SDL_FreeSurface(scoreboard2_sfc);
-			if (n_players>1) scoreboard2_sfc=IMG_Load("graphics/s_board12p.bmp");
-						else scoreboard2_sfc=IMG_Load("graphics/s_board11p.bmp");
+			if (n_players>1) scoreboard2_sfc=checked_img_load("graphics/s_board12p.bmp");
+						else scoreboard2_sfc=checked_img_load("graphics/s_board11p.bmp");
 		} else {
-			if (n_players>1) scoreboard2_sfc=IMG_Load("graphics/s_board22p.bmp");
-						else scoreboard2_sfc=IMG_Load("graphics/s_board21p.bmp");
+			if (n_players>1) scoreboard2_sfc=checked_img_load("graphics/s_board22p.bmp");
+						else scoreboard2_sfc=checked_img_load("graphics/s_board21p.bmp");
 		} /* if */ 
 
 		desired_scoreboard_x=SCREEN_X-scoreboard_sfc->w;
 		if (n_players>1) desired_scoreboard_x=SCREEN_X-128;
 					else desired_scoreboard_x=SCREEN_X-144;
 
-		if (current_level==1) levelintro_sfc=IMG_Load("graphics/stage1.jpg");
-		if (current_level==2) levelintro_sfc=IMG_Load("graphics/stage2.jpg");;
-		if (current_level==3) levelintro_sfc=IMG_Load("graphics/stage3.jpg");;
-		if (current_level==4) levelintro_sfc=IMG_Load("graphics/stage4.jpg");;
-		if (current_level==5) levelintro_sfc=IMG_Load("graphics/stage5.jpg");;
-		if (current_level==6) levelintro_sfc=IMG_Load("graphics/stage6.jpg");;
+		if (current_level==1) levelintro_sfc=checked_img_load("graphics/stage1.jpg");
+		if (current_level==2) levelintro_sfc=checked_img_load("graphics/stage2.jpg");;
+		if (current_level==3) levelintro_sfc=checked_img_load("graphics/stage3.jpg");;
+		if (current_level==4) levelintro_sfc=checked_img_load("graphics/stage4.jpg");;
+		if (current_level==5) levelintro_sfc=checked_img_load("graphics/stage5.jpg");;
+		if (current_level==6) levelintro_sfc=checked_img_load("graphics/stage6.jpg");;
 
 		/* Create the game: */ 
 		delete game;

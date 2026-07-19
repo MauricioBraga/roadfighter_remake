@@ -24,6 +24,8 @@
 #include "CRoadFighter.h"
 #include "auxiliar.h"
 
+#include "debug.h"
+
 const int EFFECT_LENGTH=25;
 const int TEXT_EFFECT_LENGTH=16;
 
@@ -32,6 +34,8 @@ extern int start_level;
 int CRoadFighter::menu_cycle(void)
 {
 	if (state_timmer==0) {
+
+		output_debug_message("CRoadFighter::menu_cycle: cycle 0.\n");
 
 		menu_effect=(rand()%3)+1;	/* 1,2 � 3 */ 
 		menu_state=0;
@@ -255,6 +259,7 @@ int CRoadFighter::menu_cycle(void)
 			case 0:
 				if (menu_item==3) {
 					Sound_release_music();
+					output_debug_message("CRoadFighter::menu_cycle: going to QUIT_STATE.\n");
 					return QUIT_STATE;
 				} /* if */ 
 				break;
@@ -267,6 +272,7 @@ int CRoadFighter::menu_cycle(void)
 					interlevel_state=0;
 					interlevel_timmer=0;
 					Sound_release_music();
+					output_debug_message("CRoadFighter::menu_cycle: going to INTERLEVEL_STATE (game_mode=%d, n_players=%d).\n",game_mode,n_players);
 					return INTERLEVEL_STATE;
 				} /* if */ 
 				if (menu_item==1) {
@@ -277,6 +283,7 @@ int CRoadFighter::menu_cycle(void)
 					interlevel_state=0;
 					interlevel_timmer=0;
 					Sound_release_music();
+					output_debug_message("CRoadFighter::menu_cycle: going to INTERLEVEL_STATE (game_mode=%d, n_players=%d).\n",game_mode,n_players);
 					return INTERLEVEL_STATE;
 				} /* if */ 
 				if (menu_item==2) {
@@ -287,6 +294,7 @@ int CRoadFighter::menu_cycle(void)
 					interlevel_state=0;
 					interlevel_timmer=0;
 					Sound_release_music();
+					output_debug_message("CRoadFighter::menu_cycle: going to INTERLEVEL_STATE (game_mode=%d, n_players=%d).\n",game_mode,n_players);
 					return INTERLEVEL_STATE;
 				} /* if */ 
 				break;
@@ -300,6 +308,7 @@ int CRoadFighter::menu_cycle(void)
 					interlevel_timmer=0;
 					n_players=2;
 					Sound_release_music();
+					output_debug_message("CRoadFighter::menu_cycle: going to INTERLEVEL_STATE (game_mode=%d, n_players=%d).\n",game_mode,n_players);
 					return INTERLEVEL_STATE;
 				} /* if */ 
 				if (menu_item==1) {
@@ -310,6 +319,7 @@ int CRoadFighter::menu_cycle(void)
 					interlevel_state=0;
 					interlevel_timmer=0;
 					Sound_release_music();
+					output_debug_message("CRoadFighter::menu_cycle: going to INTERLEVEL_STATE (game_mode=%d, n_players=%d).\n",game_mode,n_players);
 					return INTERLEVEL_STATE;
 				} /* if */ 
 				if (menu_item==2) {
@@ -320,6 +330,7 @@ int CRoadFighter::menu_cycle(void)
 					interlevel_state=0;
 					interlevel_timmer=0;
 					Sound_release_music();
+					output_debug_message("CRoadFighter::menu_cycle: going to INTERLEVEL_STATE (game_mode=%d, n_players=%d).\n",game_mode,n_players);
 					return INTERLEVEL_STATE;
 				} /* if */ 
 				break;
@@ -330,10 +341,10 @@ int CRoadFighter::menu_cycle(void)
 
 	if (menu_state==1 || menu_state==2 || menu_state==3) {
 		if (menu_current_menu==0) {
-			delete menu_tittle_text;
+			delete[] menu_tittle_text;
 			menu_tittle_text=new char[strlen("PLAY SELECT:")+1];
 			strcpy(menu_tittle_text,"PLAY SELECT:");
-			delete menu_options_text;
+			delete[] menu_options_text;
 			menu_options_text=new char[strlen("ONE PLAYER\nTWO PLAYERS\nOPTIONS\nQUIT\n")+1];
 			strcpy(menu_options_text,"ONE PLAYER\nTWO PLAYERS\nOPTIONS\nQUIT\n");
 			menu_nitems=4;
@@ -341,10 +352,10 @@ int CRoadFighter::menu_cycle(void)
 
 		if (menu_current_menu==1) {
 			char tmp[256];
-			delete menu_tittle_text;
+			delete[] menu_tittle_text;
 			menu_tittle_text=new char[strlen("OPTIONS:")+1];
 			strcpy(menu_tittle_text,"OPTIONS:");
-			delete menu_options_text;
+			delete[] menu_options_text;
 			sprintf(tmp,"PLAYER 1 KEYS\nPLAYER 2 KEYS\nEXTRAS: %s\nDEFAULT\nBACK\n",(game_remake_extras ? "ON":"OFF"));
 			menu_options_text=new char[strlen(tmp)+1];
 			strcpy(menu_options_text,tmp);
@@ -353,10 +364,10 @@ int CRoadFighter::menu_cycle(void)
 
 		if (menu_current_menu==2) {
 			char tmp[256];
-			delete menu_tittle_text;
+			delete[] menu_tittle_text;
 			menu_tittle_text=new char[strlen("PLAYER 1:")+1];
 			strcpy(menu_tittle_text,"PLAYER 1:");
-			delete menu_options_text;
+			delete[] menu_options_text;
 			sprintf(tmp,"RIGHT : %s\nLEFT : %s\nFIRE : %s\nBACK\n",
 					(menu_redefining_key==0 ? "":SDL_GetScancodeName((SDL_Scancode)right_key)),
 					(menu_redefining_key==1 ? "":SDL_GetScancodeName((SDL_Scancode)left_key)),
@@ -367,10 +378,10 @@ int CRoadFighter::menu_cycle(void)
 		} /* if */ 
 		if (menu_current_menu==3) {
 			char tmp[256];
-			delete menu_tittle_text;
+			delete[] menu_tittle_text;
 			menu_tittle_text=new char[strlen("PLAYER 2:")+1];
 			strcpy(menu_tittle_text,"PLAYER 2:");
-			delete menu_options_text;
+			delete[] menu_options_text;
 			sprintf(tmp,"RIGHT : %s\nLEFT : %s\nFIRE : %s\nBACK\n",
 					(menu_redefining_key==3 ? "":SDL_GetScancodeName((SDL_Scancode)right2_key)),
 					(menu_redefining_key==4 ? "":SDL_GetScancodeName((SDL_Scancode)left2_key)),
@@ -381,10 +392,10 @@ int CRoadFighter::menu_cycle(void)
 		} /* if */ 
 		if (menu_current_menu==4) {
 			char tmp[256];
-			delete menu_tittle_text;
+			delete[] menu_tittle_text;
 			menu_tittle_text=new char[strlen("ONE PLAYER:")+1];
 			strcpy(menu_tittle_text,"ONE PLAYER:");
-			delete menu_options_text;
+			delete[] menu_options_text;
 			sprintf(tmp,"LEVEL A\nLEVEL B\nLEVEL C\nBACK\n");
 			menu_options_text=new char[strlen(tmp)+1];
 			strcpy(menu_options_text,tmp);
@@ -392,10 +403,10 @@ int CRoadFighter::menu_cycle(void)
 		} /* if */ 
 		if (menu_current_menu==5) {
 			char tmp[256];
-			delete menu_tittle_text;
+			delete[] menu_tittle_text;
 			menu_tittle_text=new char[strlen("TWO PLAYERS:")+1];
 			strcpy(menu_tittle_text,"TWO PLAYERS:");
-			delete menu_options_text;
+			delete[] menu_options_text;
 			sprintf(tmp,"LEVEL A\nLEVEL B\nLEVEL C\nBACK\n");
 			menu_options_text=new char[strlen(tmp)+1];
 			strcpy(menu_options_text,tmp);

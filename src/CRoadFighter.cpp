@@ -64,26 +64,27 @@ CRoadFighter::CRoadFighter(void)
 
 	for(i=0;i<SDL_SCANCODE_COUNT;i++) old_keyboard[i]=0;
 
-	font1=TTF_OpenFont("fonts/comicbd.ttf", 16);
-	font2big=TTF_OpenFont("fonts/tanglewo.ttf", FONT_SIZE);
-	font2medium=TTF_OpenFont("fonts/tanglewo.ttf", int(FONT_SIZE*0.8));
-	font2small=TTF_OpenFont("fonts/tanglewo.ttf", int(FONT_SIZE*0.65));
+	font1=checked_ttf_open("fonts/comicbd.ttf", 16);
+	font2big=checked_ttf_open("fonts/tanglewo.ttf", FONT_SIZE);
+	font2medium=checked_ttf_open("fonts/tanglewo.ttf", int(FONT_SIZE*0.8));
+	font2small=checked_ttf_open("fonts/tanglewo.ttf", int(FONT_SIZE*0.65));
 
-	disclaimer_sfc=IMG_Load("graphics/disclaimer.jpg");
-	retroremakes_sfc=IMG_Load("graphics/retroremakes.bmp");
-	konami1_sfc=IMG_Load("graphics/konami1.jpg");
-	konami2_sfc=IMG_Load("graphics/konami2.jpg");
-	tittle_sfc=IMG_Load("graphics/title.jpg");
-	arrow_sfc=IMG_Load("graphics/arrow.bmp");
+	disclaimer_sfc=checked_img_load("graphics/disclaimer.png");
+	retroremakes_sfc=checked_img_load("graphics/retroremakes.bmp");
+	konami1_sfc=checked_img_load("graphics/konami1.jpg");
+	konami2_sfc=checked_img_load("graphics/konami2.jpg");
+	tittle_sfc=checked_img_load("graphics/title.jpg");
+	arrow_sfc=checked_img_load("graphics/arrow.bmp");
 	scoreboard_sfc=0;
-	gamemap_sfc=IMG_Load("graphics/gamemap.bmp");
-	minicar1_sfc=IMG_Load("graphics/minicar1.bmp");
-	minicar2_sfc=IMG_Load("graphics/minicar2.bmp");
-	gameover_sfc=IMG_Load("graphics/gameover.jpg");
-	scoreboard_sfc=IMG_Load("graphics/scoreboard.bmp");
+	gamemap_sfc=checked_img_load("graphics/gamemap.bmp");
+	minicar1_sfc=checked_img_load("graphics/minicar1.bmp");
+	minicar2_sfc=checked_img_load("graphics/minicar2.bmp");
+	gameover_sfc=checked_img_load("graphics/gameover.jpg");
+	scoreboard_sfc=checked_img_load("graphics/scoreboard.bmp");
 	scoreboard2_sfc=0;
-	scoreboardleft_sfc=IMG_Load("graphics/scoreboard_left.bmp");
+	scoreboardleft_sfc=checked_img_load("graphics/scoreboard_left.bmp");
 
+	
 	{
 		SDL_Color c;
 		const char *text="        "

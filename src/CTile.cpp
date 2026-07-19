@@ -261,7 +261,7 @@ TILE_SOURCE::TILE_SOURCE(char *filename)
 
 TILE_SOURCE::~TILE_SOURCE(void)
 {
-	delete fname;
+	delete[] fname;
 	fname=0;
 	SDL_FreeSurface(sfc);
 } /* TILE_SOURCE::~TILE_SOURCE */ 
@@ -282,10 +282,10 @@ bool TILE_SOURCE::load(FILE *fp)
 
 	if (1!=fscanf(fp,"%s",tmp)) return false;
 
-	if (fname!=0) delete fname;
+	if (fname!=0) delete[] fname;
 	fname=new char[strlen(tmp)+1];
 	strcpy(fname,tmp);
-	tmp_sfc=IMG_Load(fname);
+	tmp_sfc=checked_img_load(fname);
 
 	sfc = SDL_CreateRGBSurface(SDL_HWSURFACE,tmp_sfc->w,tmp_sfc->h,32,0,0,0,AMASK);
 	SDL_SetAlpha(sfc,0,SDL_ALPHA_OPAQUE);

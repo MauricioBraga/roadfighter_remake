@@ -15,20 +15,23 @@ FILE *fp = 0;
 
 void output_debug_message(const char *fmt, ...)
 {
-    char text[256];
+    char text[1024];
     va_list ap;
 
     if (fmt == 0)
         return ;
 
     va_start(ap, fmt);
-    vsprintf(text, fmt, ap);
+    vsnprintf(text, sizeof(text), fmt, ap);
     va_end(ap);
 
     if (fp == 0)
 		fp = f1open("roadfighter.dbg", "w", USERDATA);
 
-    fprintf(fp, text);
+    if (fp == 0) return; /* couldn't open the log (e.g. non-writable folder) -
+                             debug logging must never be able to crash the game */
+
+    fprintf(fp, "%s", text);
     fflush(fp);
 } /* glprintf */
 

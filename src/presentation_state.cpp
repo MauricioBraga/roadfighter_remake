@@ -12,6 +12,8 @@
 #include "CRoadFighter.h"
 #include "auxiliar.h"
 
+#include "debug.h"
+
 const int presentation_fade_time=25;
 
 int CRoadFighter::presentation_cycle(void)
@@ -20,6 +22,7 @@ int CRoadFighter::presentation_cycle(void)
 	bool key_pressed;
 
 	if (state_timmer==0) {
+		output_debug_message("CRoadFighter::presentation_cycle: cycle 0.\n");
 		presentation_state=0;
 		presentation_timmer=0;
 	} /* if */ 
@@ -48,7 +51,10 @@ int CRoadFighter::presentation_cycle(void)
 	} /* if */ 
 
 	if (presentation_state==1 && presentation_timmer<=0) presentation_state=2;
-	if (presentation_state==3 && presentation_timmer<=0) return KONAMI_STATE;
+	if (presentation_state==3 && presentation_timmer<=0) {
+		output_debug_message("CRoadFighter::presentation_cycle: going to KONAMI_STATE.\n");
+		return KONAMI_STATE;
+	} /* if */ 
 
 	return PRESENTATION_STATE;
 } /* CRoadFighter::presentation_cycle */ 

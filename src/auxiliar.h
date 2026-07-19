@@ -43,6 +43,16 @@ void surface_bicolor(SDL_Surface *surface,float factor,int r1,int g1,int b1,int 
 
 SDL_Surface *load_maskedimage(char *image,char *mask,char *path);
 
+ 
+// Asset loading must never fail silently: if IMG_Load()/TTF_OpenFont() ever
+// return NULL (missing/corrupted file), these report a clear error (log +
+// message box) and exit, instead of letting a NULL surface/font linger
+// until something dereferences it much later, far from the real cause.
+SDL_Surface *checked_img_load(const char *path);
+TTF_Font *checked_ttf_open(const char *path,int size);
+    
+ void surface_automatic_alpha(SDL_Surface *sfc);
+
 void surface_automatic_alpha(SDL_Surface *sfc);
 void surface_bw(SDL_Surface *sfc,int threshold);
 void surface_mask_from_bitmap(SDL_Surface *sfc,SDL_Surface *mask,int x,int y);

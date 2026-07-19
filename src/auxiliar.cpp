@@ -16,6 +16,7 @@
 
 #include "auxiliar.h"
 #include "List.h"
+#include "debug.h"
 
 #ifndef _WIN32
 #ifndef HAVE_STRLWR
@@ -89,7 +90,7 @@ SDL_Surface *load_maskedimage(char *imagefile,char *maskfile,char *path)
 
 	res=SDL_DisplayFormatAlpha(tmp);
 
-	/* Aplicar la m�scara: */ 
+	/* Aplicar a máscara: */ 
 	{
 		int x,y;
 		Uint8 r,g,b,a;
@@ -120,6 +121,34 @@ SDL_Surface *load_maskedimage(char *imagefile,char *maskfile,char *path)
 	return res;
 } /* load_maskedimage */ 
 
+
+SDL_Surface *checked_img_load(const char *path)
+{
+	SDL_Surface *sfc=IMG_Load(path);
+	if (sfc==0) {
+		char msg[512];
+		snprintf(msg,sizeof(msg),"Failed to load image:\n%s\n\n%s",path,SDL_GetError());
+		output_debug_message("ERROR: %s\n",msg);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Road Fighter - asset load error",msg,0);
+		exit(1);
+	} /* if */ 
+	return sfc;
+} /* checked_img_load */ 
+
+
+
+TTF_Font *checked_ttf_open(const char *path,int size)
+{
+	TTF_Font *f=TTF_OpenFont(path,size);
+	if (f==0) {
+		char msg[512];
+		snprintf(msg,sizeof(msg),"Failed to load font:\n%s\n\n%s",path,SDL_GetError());
+		output_debug_message("ERROR: %s\n",msg);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Road Fighter - asset load error",msg,0);
+		exit(1);
+	} /* if */ 
+	return f;
+} /* checked_ttf_open */ 
 
 void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 {
