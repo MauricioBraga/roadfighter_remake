@@ -254,6 +254,7 @@ void CGame::init_game(const char *mapname)
 	S_caradvance=Sound_create_sound("sound/car_pass");
 	S_carengine=Sound_create_sound("sound/car_running");
 	S_carskid=Sound_create_sound("sound/car_brake");
+	S_pause=Sound_create_sound("sound/pause");
 	S_water=Sound_create_sound("sound/water");
 	S_collision=Sound_create_sound("sound/collision");
 	S_truck=Sound_create_sound("sound/truck");
@@ -469,8 +470,27 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 	CObject *o;
 
 	if (keyboard[SDL_SCANCODE_F1] && !old_keyboard[SDL_SCANCODE_F1]) {
-		if (paused) paused=false;
-			   else paused=true;
+		//if (paused) paused=false;
+		//	   else paused=true;
+		if (paused) {
+			paused=false;
+			Sound_unpause_music();
+		} else {
+			paused=true;
+			if (S_pause!=0) Sound_play(S_pause);
+			Sound_pause_music();
+
+			/* each player's own engine/skid sound handling) stops running 
+			   entirely while
+			   paused, so nothing would otherwise ever tell those looping
+			   channels to stop: */ 
+			l.Instance(focusing_objects);
+			l.Rewind();
+			while(l.Iterate(o)) {
+				((CPlayerCarObject *)o)->stop_sound();
+			} /* while */ 
+		} /* if */ 
+
 	} /* if */ 
 
 	// Activates / deactivates cheat mode, turning on / off fuel consumption:

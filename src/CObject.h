@@ -79,6 +79,10 @@ protected:
 	int y_speed,x_speed;
 };
 
+	/* Halts the car's engine channel immediately (used when
+	   the game is paused. cycle() will restart it once
+	   unpaused. */
+	void stop_sound(void);
 
 class CFuelObject : public CObject {
 public:
@@ -108,6 +112,8 @@ public:
 	int get_score(void) {return score;};
 
 	void reach_goal(void);
+	void stop_sound(void);
+
 
 protected:
 	int car_tile(int angle);	/* in degrees */ 

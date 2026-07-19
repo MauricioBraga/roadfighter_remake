@@ -581,3 +581,15 @@ void CPlayerCarObject::reach_goal(void)
 {
 	goal_reached=true;
 } /* CPlayerCarObject::reach_goal */ 
+
+void CPlayerCarObject::stop_sound(void)
+{
+	if (enginesound_channel!=-1) {
+		Sound_halt_channel(enginesound_channel);
+		enginesound_channel=-1;
+	} /* if */ 
+	if (skidsound_channel!=-1) {
+		Sound_halt_channel(skidsound_channel);
+		skidsound_channel=-1;
+	} /* if */ 
+} /* CPlayerCarObject::stop_sound */

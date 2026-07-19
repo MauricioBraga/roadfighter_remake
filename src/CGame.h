@@ -102,6 +102,7 @@ private:
 	SOUNDT S_carstart,S_fuelempty,S_caradvance,S_collision;
 	SOUNDT S_truck;
 	SOUNDT S_carengine,S_carskid;
+	SOUNDT S_pause;
 
 	/* Background: */ 
 	List<CObject> background;
