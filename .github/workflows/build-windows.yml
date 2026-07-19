@@ -48,10 +48,39 @@ jobs:
         run: |
           cmake --build build
 
-      # CMakeLists.txt already copies the runtime DLLs and the
-      # fonts/graphics/maps/sound folders next to roadfighter.exe as a
-      # post-build step, so the output folder is already a ready-to-run copy
-      # of the game. We just need to zip it up.
+      # $<TARGET_RUNTIME_DLLS:roadfighter> in CMakeLists.txt only copies the
+      # DLLs of directly-linked CMake targets (SDL3, SDL3_image, SDL3_ttf,
+      # SDL3_mixer) - it does NOT walk their transitive dependencies. That
+      # misses things like the MinGW runtime itself (libstdc++-6.dll,
+      # libgcc_s_seh-1.dll, libwinpthread-1.dll) and whatever SDL3_ttf/
+      # SDL3_image/SDL3_mixer pull in under the hood (FreeType, HarfBuzz,
+      # libpng, zlib, libogg/libvorbis, etc). We resolve the *full*
+      # dependency closure with ldd instead, repeating until no new DLLs
+      # are found, so the zip works on a clean Windows machine with no
+      # MSYS2/MinGW installed.
+      - name: Bundle all MinGW runtime DLLs
+        run: |
+          exe="build/roadfighter.exe"
+          added=1
+          while [ "$added" -ne 0 ]; do
+            added=0
+            for f in "$exe" build/*.dll; do
+              [ -f "$f" ] || continue
+              for dep in $(ldd "$f" 2>/dev/null | grep '/mingw64/bin/' | awk '{print $3}'); do
+                base=$(basename "$dep")
+                if [ ! -f "build/$base" ]; then
+                  cp "$dep" "build/$base"
+                  added=1
+                fi
+              done
+            done
+          done
+
+      # CMakeLists.txt already copies the fonts/graphics/maps/sound folders
+      # next to roadfighter.exe as a post-build step, and the previous step
+      # took care of every DLL, so the output folder is already a
+      # ready-to-run, self-contained copy of the game. We just need to zip
+      # it up.
       - name: Package release zip
         run: |
           version="${GITHUB_REF_NAME:-dev}"
