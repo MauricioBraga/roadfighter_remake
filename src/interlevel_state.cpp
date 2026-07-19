@@ -167,6 +167,10 @@ int CRoadFighter::interlevel_cycle(void)
 			Sound_release_music();
 			Sound_music_volume(MIX_MAX_VOLUME);
 			playing_reachedend=false;
+
+			// sound sfxs can play again.
+			Sound_mute_sfx(false);
+			
 			return PLAYING_STATE;
 		} else interlevel_timmer--;
 		break;

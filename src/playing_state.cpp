@@ -105,6 +105,13 @@ int CRoadFighter::playing_cycle(void)
 			playing_reachedend=true;
 			char music_path[64];
 			sprintf(music_path,"sound/set%d/levelcomplete",MUSIC_SET);
+			
+			// turn off all sounds and signalize that no SFX can play
+			// during levelcomplete music playing.
+			Sound_halt_all();
+			Sound_mute_sfx(true);
+			
+			// play level complete music.
 			Sound_create_music(music_path,0);
 			// Sound_create_music("sound/levelcomplete",0);
 		} /* if */ 

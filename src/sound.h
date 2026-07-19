@@ -46,6 +46,12 @@ void Sound_set_channel_gain(int channel,float gain);
 bool Sound_channel_playing(int channel);
 bool Sound_any_playing(void);
 
+/* While muted, every Sound_play*()/Sound_play_loop_ch() call is a no-op
+ * (returns -1 without starting anything) - used to make sure no SFX (crash,
+ * horn, tire skid, engine, etc) can play over the "levelcomplete" music. */
+void Sound_mute_sfx(bool mute);
+
+
 void Sound_create_music(const char *f1,int times);
 void Sound_release_music(void);
 void Sound_pause_music(void);

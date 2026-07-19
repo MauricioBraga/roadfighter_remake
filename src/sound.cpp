@@ -23,6 +23,14 @@ static int n_channels=-1;
 static MIX_Track *music_track=0;
 static MIX_Audio *music_audio=0;
 
+// allows to mute all SFX during playing of levelcomplete music.
+static bool sfx_muted=false;
+
+void Sound_mute_sfx(bool mute)
+{
+	sfx_muted=mute;
+} /* Sound_mute_sfx */
+
 static int find_free_channel(void)
 {
 	static int rr=0;
@@ -184,6 +192,8 @@ void Sound_delete_sound(SOUNDT s)
 
 int Sound_play(SOUNDT s)
 {
+	if (sfx_muted) return -1;
+
 	if (sound_enabled && s!=0) {
 		int ch=find_free_channel();
 		MIX_Track *t=get_channel_track(ch);
@@ -225,6 +235,7 @@ int Sound_play_continuous(SOUNDT s,int volume)
 
 void Sound_play_ch(SOUNDT s,int ch)
 {
+	if (sfx_muted) return;
 	if (sound_enabled && ch>=0 && ch<n_channels) {
 		MIX_Track *t=get_channel_track(ch);
 		if (t==0) return;
@@ -247,6 +258,7 @@ void Sound_play_ch(SOUNDT s,int ch,int volume)
 
 int Sound_play_loop_ch(SOUNDT s,int channel,int loops)
 {
+	if (sfx_muted) return -1;
 	if (!sound_enabled || s==0) return -1;
 
 	int ch = (channel==-1) ? find_free_channel() : channel;
