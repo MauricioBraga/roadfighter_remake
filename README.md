@@ -8,59 +8,65 @@
 
 <p>
 
-This repository aims to do some modifications / enhancements to the original Road Fighter remake, developed by Braingames and sent to the RETROREMAKES REMAKE COMPETITION in the year of 2003. 
+This repository contains an updated version of the source code for Road Fighter Remake, originally developed by Brain Games for the Retro Remakes Competition in 2003.
 
-You can find the original RoadFighter remake in the official website: 
+The official website of Brain Games' Road Fighter Remake is available here:
 
 http://roadfighter.jorito.net
 
-## Goals of the project
 
-This project was developed for the Retro Remakes competition in 2003. It has not been updated ever since. The code used SDL 1.2, which is too old and is now considered deprecated. Plus, the available binaries are 32 bit only. Aside from that, the game could use a few upgrades and some polishing. 
+## Project Goals
 
-Some of the things already implemented so far in this version:
+This project was developed for the Retro Remakes competition in 2003. After so many years, the project has naturally begun to show its age. 
 
-- SDL3 support, replacing the old deprecated SDL 1.2 lib used in the original game, making it also possible to generate 64 bit binaries of the game.
-- Three new music sound sets (original one, Jorito extended (using music from other Braingames remake, F1 Spirit, and the music made by Wolf to be used in the Road Fighter wave MSX patch (available here) )); 
-- Option to control the sound engine SFX volume using + and - keys;
-- Cheat mode added;
-- Make it more user friendly, providing error messages if files are missing;
-- F1 pause SFX, with no music / SFX playing during the pause time; 
-- bug fixes.
+The game was originally developed using SDL 1.2, which is now obsolete and no longer maintained. In addition, only 32-bit binaries were available, with no native builds for modern platforms such as Apple Silicon (ARM) systems.
+
+Our goal is to refactor the source code to use SDL3, while also introducing new features, bug fixes and general improvements. 
+
+## What's New
+
+- Migrated the project from SDL 1.2 to SDL3, enabling modern builds and native 64-bit binaries.
+- Added three selectable music soundtracks:
+  - Original soundtrack created by Jorito;
+  - Extended original soundtrack (also created by Jorito), featuring music from another Brain Games remake, F1 Spirit;
+  - Alternative soundtrack by Wolf, originally composed for the Road Fighter Wave MSX patch.
+
+- Added keyboard shortcuts (+ and -) to adjust the sound effects (SFX) volume.
+- Added a cheat mode (press T to toggle).
+- Improved error reporting by displaying messages whenever required files are missing, making installation problems easier to diagnose.
+- Pause mode now mutes both music and sound effects while the game is paused.
+- Bug fixes.
 
 
 ## Credits
 
 - Programming: Santi "Brain" Ontañón
 - Graphics: Miikka "MP83" Poikela
-- Music/SFX: Jorrith "Jorito" Schaap
+- Music / SFX: Jorrith "Jorito" Schaap
 - Additional Programming: Maurício "Mauk" Braga
-- Beta Testing: Jason Eames, Miikka Poikela, Jorrith Schaap, Santi Ontañón, Maurício Braga.
+- Beta Testers: Jason Eames, Miikka Poikela, Jorrith Schaap, Santi Ontañón, Maurício Braga.
 
-* Copyright (c) 2003-2009 **(Brain Games)** 
+* Copyright © **(Brain Games)** 
 
 
 ## Thanks
 
- * The Retro Remakes crew, for organizing this wonderful competition!
- * Konami, for releasing the original game!
- * Lars the 18TH, for the gamemap picture
- * Manuel Bilderbeek, for the Linux port
+ * The Retro Remakes crew, for organizing such a wonderful competition!
+ * Konami, for creating the original game!
+ * Lars the 18TH, for the gamemap picture.
+ * Manuel Bilderbeek, for the Linux port.
 
-## Legal notice
+## Legal Notice
 
-This is the unofficial remake of Konami **ROAD FIGHTER** which was originally
-released in 1985 for the MSX home computer systems.
+This project is an unofficial remake of **Konami's Road Fighter**, originally released in 1985 for the **MSX** home computer.
 
-This repository is provided "as is". All rights to the original game remain with Konami and the original developers. 
+This repository is provided **"as is"**. 
 
-The Braingames team (me included) would like to make it clear that we are not related to Konami in any way except for liking their excellent games. 
+All rights to the original game, its characters, graphics, music, and trademarks remain the property of Konami and their respective owners.
 
-This is a not-for-profit remake. So, we don't get any money from remaking
-this or any other Konami titles.
+The Braingames team would also like to make it clear that we are not affiliated with Konami in any way other than being fans of their excellent games.
 
-Also, the repository will be removed if Konami or their legal representatives ask me to do so.
-
+This remake is distributed free of charge and is not intended for commercial use. 
 
 
 
