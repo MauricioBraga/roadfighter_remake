@@ -16,18 +16,25 @@ http://roadfighter.jorito.net
 
 ## Goals of the project
 
-This project was developed before I joined the Braingames group. Since I have always been a fan of this game, and having previously created a patch to the original MSX *Road Fighter* with a new wave soundtrack (available <a href="https://github.com/MauricioBraga/ROAD-FIGHTER-WAVE"> here </a>), I decided to also bring a few elements I feel are interesting / important to this remake:
+This project was developed for the Retro Remakes competition in 2003. It has not been updated ever since. The code used SDL 1.2, which is too old and is now considered deprecated. Plus, the available binaries are 32 bit only. Aside from that, the game could use a few upgrades and some polishing. 
+
+Some of the things already implementeded so far in this version:
 
 - SDL3 support, replacing the old deprecated SDL 1.2 lib used in the original game, making it also possible to generate 64 bit binaries of the game.
-- New music to each level (allowing the use of different sound sets).
-- Minor enhancements (cheat mode, new SFX, maybe new graphic and animations)
+- Three new music sound sets (original one, Jorito extended (using music from other Braingames remake, F1 Spirit, and the music made by Wolf to be used in the Road Fighter wave MSX patch (available here) )); 
+- Option to control the sound engine SFX volume using + and - keys;
+- Cheat mode added;
+- Make it more user friendly, providing error messages if files are missing;
+- F1 pause SFX, with no music / SFX playing during the pause time; 
+- bug fixes.
 
 
-## Original RoadFighter remake credits
+## Credits
 
-- Programming: Santi Ontañón
-- Graphics: Miikka Poikela
-- Music/SFX: Jorrith Schaap
+- Programming: Santi "Brain" Ontañón
+- Graphics: Miikka "MP83" Poikela
+- Music/SFX: Jorrith "Jorito" Schaap
+- Additional Programming: Maurício "Mauk" Braga
 - Beta Testing: Jason Eames, Miikka Poikela, Jorrith Schaap, Santi Ontañón
 * Copyright (c) 2003-2009 **(Brain Games)** 
 
