@@ -58,4 +58,32 @@ if (WIN32)
 			$<TARGET_FILE_DIR:roadfighter>
 		COMMAND_EXPAND_LISTS
 	)
+
+	# SDL3_image (and, depending on how it was built, SDL3_mixer) loads its
+	# per-format codec libraries dynamically at runtime via LoadLibrary,
+	# instead of linking against them at load time - e.g. libjpeg is only
+	# opened the moment the game actually tries to decode a .jpg. That
+	# makes these DLLs invisible to $<TARGET_RUNTIME_DLLS:...> above (and
+	# to dependency-walking tools like ldd/Dependencies), since they never
+	# show up in roadfighter.exe's/SDL3_image.dll's import table. They have
+	# to be located and copied explicitly by name instead.
+	set(RUNTIME_PLUGIN_DLLS
+		libjpeg-8.dll
+		libpng16-16.dll
+		libtiff-6.dll
+		libwebp-7.dll
+		libwebpdemux-2.dll
+	)
+	foreach(dll_name ${RUNTIME_PLUGIN_DLLS})
+		find_file(FOUND_${dll_name} NAMES ${dll_name})
+		if (FOUND_${dll_name})
+			add_custom_command(TARGET roadfighter POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy_if_different
+					${FOUND_${dll_name}}
+					$<TARGET_FILE_DIR:roadfighter>
+			)
+		else()
+			message(WARNING "Optional runtime-loaded DLL not found, skipping: ${dll_name} (only a problem if the game actually needs that format at runtime)")
+		endif()
+	endforeach()
 endif()
