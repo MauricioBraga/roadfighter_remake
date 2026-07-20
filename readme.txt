@@ -2,8 +2,7 @@
 
 This copy of the game has been ported from SDL 1.2 (+ SDL_mixer/SDL_ttf/
 SDL_image 1.2/2.0 and the bundled SGE library) to SDL3 (+ SDL3_mixer/
-SDL3_ttf/SDL3_image). Build with CMake - see build/linux/INSTALL for Linux
-or the accompanying "Windows + VS Code" setup instructions for Windows.
+SDL3_ttf/SDL3_image). Build with CMake.
 A couple of behavioural notes:
  - Key bindings are now stored as SDL scancodes (physical keys) instead of
    keycodes, since SDL3 keycodes are no longer small contiguous integers.
@@ -87,10 +86,10 @@ this or any other Konami titles.
 
   --  CREDITS  --
 
-Programming: Santi Ontañón
+Programming: Santi Ontaï¿½ï¿½n
 Graphics: Miikka Poikela
 Music/SFX: Jorrith Schaap
-Beta Testing: Jason Eames, Miikka Poikela, Jorrith Schaap, Santi Ontañón
+Beta Testing: Jason Eames, Miikka Poikela, Jorrith Schaap, Santi Ontaï¿½ï¿½n
 
 
   --  SPECIAL THANKS TO  --
