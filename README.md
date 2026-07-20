@@ -18,7 +18,7 @@ http://roadfighter.jorito.net
 
 This project was developed for the Retro Remakes competition in 2003. It has not been updated ever since. The code used SDL 1.2, which is too old and is now considered deprecated. Plus, the available binaries are 32 bit only. Aside from that, the game could use a few upgrades and some polishing. 
 
-Some of the things already implementeded so far in this version:
+Some of the things already implemented so far in this version:
 
 - SDL3 support, replacing the old deprecated SDL 1.2 lib used in the original game, making it also possible to generate 64 bit binaries of the game.
 - Three new music sound sets (original one, Jorito extended (using music from other Braingames remake, F1 Spirit, and the music made by Wolf to be used in the Road Fighter wave MSX patch (available here) )); 
