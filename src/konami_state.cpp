@@ -55,36 +55,36 @@ void CRoadFighter::konami_draw(SDL_Surface *screen)
 {
 	SDL_Rect r;
 
-	output_debug_message("CRoadFighter::konami_draw: entered, state_timmer=%d.\n",state_timmer);
+	// output_debug_message("CRoadFighter::konami_draw: entered, state_timmer=%d.\n",state_timmer);
 
 	r.x=0;
 	r.y=0;
 	r.w=konami1_sfc->w;
 	r.h=konami1_sfc->h;
 
-	output_debug_message("CRoadFighter::konami_draw: about to blit konami1_sfc.\n");
+	// output_debug_message("CRoadFighter::konami_draw: about to blit konami1_sfc.\n");
 	SDL_BlitSurface(konami1_sfc,&r,screen,&r);
-	output_debug_message("CRoadFighter::konami_draw: konami1_sfc blitted.\n");
+	// output_debug_message("CRoadFighter::konami_draw: konami1_sfc blitted.\n");
 
 	r.x=0;
 	r.y=0;
 	r.w=konami2_sfc->w;
 	r.h=state_timmer*2;
 
-	output_debug_message("CRoadFighter::konami_draw: about to blit konami2_sfc, r.h=%d, konami2_sfc=%dx%d.\n",r.h,konami2_sfc->w,konami2_sfc->h);
+	// output_debug_message("CRoadFighter::konami_draw: about to blit konami2_sfc, r.h=%d, konami2_sfc=%dx%d.\n",r.h,konami2_sfc->w,konami2_sfc->h);
 	SDL_BlitSurface(konami2_sfc,&r,screen,&r);
-	output_debug_message("CRoadFighter::konami_draw: konami2_sfc blitted.\n");
+	// output_debug_message("CRoadFighter::konami_draw: konami2_sfc blitted.\n");
 
 	{
 		float f=float(konami_timmer)*(1.0F/float(konami_fade_time));
 		if (f<0.0) f=0.0;
 		if (f<1.0) {
-			output_debug_message("CRoadFighter::konami_draw: about to call surface_fader, f=%f.\n",f);
+			// output_debug_message("CRoadFighter::konami_draw: about to call surface_fader, f=%f.\n",f);
 			surface_fader(screen,f,f,f,0);
-			output_debug_message("CRoadFighter::konami_draw: surface_fader done.\n");
+			// output_debug_message("CRoadFighter::konami_draw: surface_fader done.\n");
 		} /* if */ 
 	} /* if */ 
 
-	output_debug_message("CRoadFighter::konami_draw: leaving.\n");
+	// output_debug_message("CRoadFighter::konami_draw: leaving.\n");
 
 } /* CRoadFighter::konami_draw */ 

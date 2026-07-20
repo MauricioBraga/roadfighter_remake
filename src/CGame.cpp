@@ -456,6 +456,7 @@ bool CGame::level_completed(void)
 	while(l.Iterate(o)) {
 		CPlayerCarObject *cpo=(CPlayerCarObject *)o;
 		if (o->get_y()>=-32 && cpo->get_fuel()>0) return false;
+		// if  player is above the finish line, the level is completed:
 		if (o->get_y()<-32) completed=true;
 	} /* while */ 
 	
@@ -697,7 +698,10 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 
 	/* Test if level completed: */ 
 	if (game_state==0 && level_completed()) {
+		output_debug_message("Level complete.\n");
 		game_state=1;
+		// sets count time to change to interlevel state after 
+		// finishing a level (stage)
 		game_timmer=fade_time*4;
 	} /* if */ 
 

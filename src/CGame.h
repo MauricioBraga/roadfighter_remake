@@ -48,6 +48,7 @@ public:
 	int get_dx(void) {return dx;};
 	int get_dy(void) {return dy;};
 
+  
 	bool esc_pressed;
 	bool backspace_pressed;
 
