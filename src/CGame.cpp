@@ -469,9 +469,8 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 	List<CObject> l;
 	CObject *o;
 
+	// pause control
 	if (keyboard[SDL_SCANCODE_F1] && !old_keyboard[SDL_SCANCODE_F1]) {
-		//if (paused) paused=false;
-		//	   else paused=true;
 		if (paused) {
 			paused=false;
 			Sound_unpause_music();
@@ -498,13 +497,13 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
     	CHEAT = (CHEAT==1) ? 0 : 1;
 	} /* if */ 
 
-	// reinicia a música imediatamente, ao pressionar F9.
+	// restarts music, after pressing F9.
 	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
     	if (start_delay==0 && start_delay2==0) play_level_music(current_level);
 	} /* if */
 
-	// Ajusta o volume do som do motor com - (diminui) e + (aumenta),
-	// até o máximo (1.0) já usado por padrão no jogo:
+	// adjust engine sfx volume with keys - (decrease) and + (increase),
+	// up to (1.0) (standard start value in the game):
 	if (keyboard[SDL_SCANCODE_MINUS] || keyboard[SDL_SCANCODE_KP_MINUS]) {
 		ENGINE_VOLUME-=0.02F;
 		if (ENGINE_VOLUME<0.0F) ENGINE_VOLUME=0.0F;
@@ -528,18 +527,6 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 		if (start_delay2>0) {
 			start_delay2--;
 			if (start_delay2==0) {
-				/* 
-				if ((current_level%2)==1) Sound_create_music("sound/game_theme",-1);
-									 else Sound_create_music("sound/game_theme2",-1);
-			*/
-				/*
-				if ((current_level%6)==1) Sound_create_music("sound/level1",-1);
-				else if ((current_level%6)==2) Sound_create_music("sound/level2",-1);
-				else if ((current_level%6)==3) Sound_create_music("sound/level3",-1);
-				else if ((current_level%6)==4) Sound_create_music("sound/level4",-1);
-				else if ((current_level%6)==5) Sound_create_music("sound/level5",-1);
-				else Sound_create_music("sound/level6",-1);
-				*/
 				play_level_music(current_level);
 			} /* if */ 
 		} /* if */ 
