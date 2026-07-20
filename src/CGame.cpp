@@ -702,7 +702,10 @@ bool CGame::cycle(unsigned char *keyboard,unsigned char *old_keyboard)
 		game_state=1;
 		// sets count time to change to interlevel state after 
 		// finishing a level (stage)
-		game_timmer=fade_time*4;
+		// time adjusted to more closely match the timming 
+		// of the original MSX RoadFighter game.
+		game_timmer=fade_time*10;
+		// game_timmer=fade_time*4;
 	} /* if */ 
 
 	if (game_state==1 && game_timmer<0) return false;
