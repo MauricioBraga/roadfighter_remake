@@ -35,7 +35,8 @@ Some of the things already implemented so far in this version:
 - Graphics: Miikka "MP83" Poikela
 - Music/SFX: Jorrith "Jorito" Schaap
 - Additional Programming: Maurício "Mauk" Braga
-- Beta Testing: Jason Eames, Miikka Poikela, Jorrith Schaap, Santi Ontañón
+- Beta Testing: Jason Eames, Miikka Poikela, Jorrith Schaap, Santi Ontañón, Maurício Braga.
+
 * Copyright (c) 2003-2009 **(Brain Games)** 
 
 
