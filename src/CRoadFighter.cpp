@@ -184,7 +184,8 @@ CRoadFighter::~CRoadFighter(void)
 
 bool CRoadFighter::cycle(void)
 {
-	int i,old_state=state;
+	int i;
+	int old_state=state;
 	bool retval=true;
 	{
 		int nk=0;
@@ -194,7 +195,7 @@ bool CRoadFighter::cycle(void)
 		for(;i<SDL_SCANCODE_COUNT;i++) keyboard[i]=0;
 	}
 
-	// chaveia entre os sets de música ao pressionar F9:
+	// switches between music sets when F9 is pressed
 	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
     	MUSIC_SET++;
     	if (MUSIC_SET>N_MUSIC_SETS) MUSIC_SET=1;
@@ -220,9 +221,14 @@ bool CRoadFighter::cycle(void)
 	case QUIT_STATE:retval=false;
 					break;
 	} /* switch */ 
+	
 	// output_debug_message("CRoadFighter::cycle: terminado cycling, state=%d, state_timmer=%d\n",state,state_timmer);
-	if (state!=old_state) state_timmer=0;
-				 	 else state_timmer++;
+	
+	// if the state just changed, resets state_timmer, otherwise increments it.
+	if (state!=old_state) 
+		state_timmer=0;
+	else 
+		state_timmer++;
 
 	for(i=0;i<SDL_SCANCODE_COUNT;i++) old_keyboard[i]=keyboard[i];
 	
@@ -233,6 +239,7 @@ bool CRoadFighter::cycle(void)
 
 void CRoadFighter::draw(SDL_Surface *screen)
 {
+	// if the state has just switched, it doesn't draw the screen.
 	if (state_timmer==0) return;
 
 	switch(state) {
@@ -429,22 +436,22 @@ void CRoadFighter::scoreboard_draw(int x,int y,SDL_Surface *screen)
 	} /* if */ 
 
 
-/* Draw the "CHEAT ON" indicator: */ 
-if (CHEAT==1) {
-    SDL_Color c;
-    SDL_Surface *sfc;
+	/* Draw the "CHEAT ON" indicator: */ 
+	if (CHEAT==1) {
+    	SDL_Color c;
+    	SDL_Surface *sfc;
 
-    c.r=255;
-    c.g=0;
-    c.b=0;
-    sfc=TTF_RenderText_Blended(font1,"CHEAT ON",c);
-    r.x=x+(scoreboard_sfc->w-sfc->w)/2;
-    r.y=150;
-    r.w=sfc->w;
-    r.h=sfc->h;
-    SDL_BlitSurface(sfc,0,screen,&r);
-    SDL_FreeSurface(sfc);
-} /* if */
+    	c.r=255;
+    	c.g=0;
+    	c.b=0;
+    	sfc=TTF_RenderText_Blended(font1,"CHEAT ON",c);
+    	r.x=x+(scoreboard_sfc->w-sfc->w)/2;
+    	r.y=150;
+    	r.w=sfc->w;
+    	r.h=sfc->h;
+    	SDL_BlitSurface(sfc,0,screen,&r);
+    	SDL_FreeSurface(sfc);
+	} /* if cheat == 1;*/
 
 
 } /* CRoadFighter::scoreboard_draw */ 

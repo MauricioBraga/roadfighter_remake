@@ -12,6 +12,7 @@
 #include "List.h"
 
 class CObject {
+	/* CGame now has access to the private / protected members of CObject. */
 	friend class CGame;
 
 public:
