@@ -14,6 +14,7 @@
 #include "auxiliar.h"
 
 #include "debug.h"
+#include "filehandling.h"
 
 extern int MAX_SPEED;
 extern int MAX_FUEL;
@@ -180,6 +181,30 @@ CRoadFighter::~CRoadFighter(void)
 
 } /* CRoadFighter::~CRoadFighter */ 
 
+void CRoadFighter::load_sound_set_description(void)
+{
+	FILE *fp;
+	char path[128];
+
+	sprintf(path,"sound/set%d/description.txt",MUSIC_SET);
+	fp=f1open(path,"r",GAMEDATA);
+	if (fp!=0) {
+		if (fgets(sound_set_notify_text,sizeof(sound_set_notify_text),fp)==0) {
+			strcpy(sound_set_notify_text,"new sound set");
+		} else {
+			int len=strlen(sound_set_notify_text);
+			/* strip a trailing newline/carriage-return, if any */ 
+			while(len>0 && (sound_set_notify_text[len-1]=='\n' || sound_set_notify_text[len-1]=='\r')) {
+				sound_set_notify_text[--len]=0;
+			} /* while */ 
+			if (len==0) strcpy(sound_set_notify_text,"new sound set");
+		} /* if */ 
+		fclose(fp);
+	} else {
+		strcpy(sound_set_notify_text,"new sound set");
+	} /* if */ 
+} /* CRoadFighter::load_sound_set_description */ 
+
 
 
 bool CRoadFighter::cycle(void)
@@ -199,8 +224,20 @@ bool CRoadFighter::cycle(void)
 	if (keyboard[SDL_SCANCODE_F9] && !old_keyboard[SDL_SCANCODE_F9]) {
     	MUSIC_SET++;
     	if (MUSIC_SET>N_MUSIC_SETS) MUSIC_SET=1;
+		// loads the description of the sound set change and triggers the 
+		// notification to the user.
+		load_sound_set_description();
+    	sound_set_notify_elapsed=0;
 	} /* if */
 	
+	/* Advances the "sound set changed" notification timer (independent of
+	which top-level state we're in - it's only ever actually drawn from
+   	playing_draw(), but keeping the tick here means it behaves the same
+	way no matter what triggered/interrupted it). */ 
+	if (sound_set_notify_elapsed>=0 && sound_set_notify_elapsed<SOUND_SET_NOTIFY_TOTAL_TICKS) {
+		sound_set_notify_elapsed++;
+	} /* if */
+
 
 	// output_debug_message("CRoadFighter::cycle: estado=%d, state_timmer=%d\n",state,state_timmer);
 	switch(state) {

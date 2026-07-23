@@ -13,6 +13,16 @@
 
 #define FONT_SIZE			24
 
+/* "Sound set changed" notification timing, in ticks (~37 ticks/sec at the
+ * game's normal REDRAWING_PERIOD=27ms) = 1s 
+ * 1 s fade-in, 2s fully visible,
+ * 1s fade-out - 3 seconds on screen in total. */ 
+#define SOUND_SET_NOTIFY_FADEIN_TICKS	37
+#define SOUND_SET_NOTIFY_HOLD_TICKS		74
+#define SOUND_SET_NOTIFY_FADEOUT_TICKS	37
+#define SOUND_SET_NOTIFY_TOTAL_TICKS	(SOUND_SET_NOTIFY_FADEIN_TICKS+SOUND_SET_NOTIFY_HOLD_TICKS+SOUND_SET_NOTIFY_FADEOUT_TICKS)
+
+
 
 class CRoadFighter {
 public:
@@ -110,6 +120,12 @@ private:
 	int endsequence_timmer;
 
 	bool playing_reachedend;
+
+	/* "Sound set changed" on-screen notification (triggered by F9): */ 
+	char sound_set_notify_text[256];
+	int sound_set_notify_elapsed;	/* -1 = not showing; else counts up in ticks */ 
+	void load_sound_set_description(void);
+
 
 	unsigned char keyboard[SDL_SCANCODE_COUNT];
 	unsigned char old_keyboard[SDL_SCANCODE_COUNT];

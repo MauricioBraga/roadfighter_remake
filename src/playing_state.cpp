@@ -160,4 +160,43 @@ void CRoadFighter::playing_draw(SDL_Surface *screen)
 	} /* if */ 
 	game->draw(screen,r);
 
+	/* "Sound set changed" notification (F9): drawn AFTER game->draw(),
+   	otherwise the game viewport's own drawing would paint over it - top
+	left of the gameplay area, white text, 1s fade-in + 1s hold + 1s
+	fade-out (3s total). */ 
+	if (sound_set_notify_elapsed>=0 && sound_set_notify_elapsed<SOUND_SET_NOTIFY_TOTAL_TICKS) {
+		float alpha;
+
+		if (sound_set_notify_elapsed<SOUND_SET_NOTIFY_FADEIN_TICKS) {
+			alpha=sound_set_notify_elapsed/(float)SOUND_SET_NOTIFY_FADEIN_TICKS;
+		} else if (sound_set_notify_elapsed<SOUND_SET_NOTIFY_FADEIN_TICKS+SOUND_SET_NOTIFY_HOLD_TICKS) {
+			alpha=1.0F;
+		} else {
+			int t=sound_set_notify_elapsed-(SOUND_SET_NOTIFY_FADEIN_TICKS+SOUND_SET_NOTIFY_HOLD_TICKS);
+			alpha=1.0F-(t/(float)SOUND_SET_NOTIFY_FADEOUT_TICKS);
+		} /* if */ 
+		if (alpha<0.0F) alpha=0.0F;
+		if (alpha>1.0F) alpha=1.0F;
+
+		if (sound_set_notify_text[0]!=0) {
+			SDL_Color c;
+			SDL_Surface *sfc;
+
+			c.r=255;
+			c.g=255;
+			c.b=255;
+			sfc=TTF_RenderText_Blended(font1,sound_set_notify_text,c);
+			if (sfc!=0) {
+				SDL_SetSurfaceAlphaMod(sfc,(Uint8)(alpha*255.0F));
+				r.x=r.x+4;
+				r.y=4;
+				r.w=sfc->w;
+				r.h=sfc->h;
+				SDL_BlitSurface(sfc,0,screen,&r);
+				SDL_FreeSurface(sfc);
+			} /* if */ 
+		} /* if */ 
+	} /* if */ 
+
+
 } /* CRoadFighter::playing_draw */ 
